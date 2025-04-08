@@ -90,6 +90,11 @@ export const getSidebarData = (user: User | null): SidebarData => {
             url: '/companies',
             icon: IconBuildings,
           },
+          {
+            title: '학생',
+            url: '/students',
+            icon: IconUsers,
+          },
         ],
       },
       {
