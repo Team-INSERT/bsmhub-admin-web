@@ -3,7 +3,6 @@ import { DateRange } from 'react-day-picker'
 import { getCurrentFieldTraining } from '@/utils/users/getCurrentFieldTraining'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
-import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -91,7 +90,14 @@ export const FieldTraining = ({
         },
       ])
     }
-  }, [updateDate, updateJob, editingSection, currentFieldTraining, currentRow, setEditData])
+  }, [
+    updateDate,
+    updateJob,
+    editingSection,
+    currentFieldTraining,
+    currentRow,
+    setEditData,
+  ])
 
   return (
     <div>
@@ -104,13 +110,17 @@ export const FieldTraining = ({
                 <div className='grid grid-cols-1 gap-3'>
                   <div className='space-y-2'>
                     <span className='font-medium'>실습 기간</span>
-                    <div className='flex justify-center'>
-                      <Calendar
-                        mode='range'
-                        selected={updateDate}
-                        onSelect={setUpdateDate}
-                        className='rounded-lg border border-border p-2'
-                      />
+                    {/* 캘린더 컨테이너에 반응형 스타일 추가 */}
+                    <div className='w-full overflow-x-auto md:overflow-visible'>
+                      <div className='flex min-w-full justify-center'>
+                        <Calendar
+                          mode='range'
+                          selected={updateDate}
+                          onSelect={setUpdateDate}
+                          className='transform-origin-center w-auto max-w-full scale-[0.85] rounded-lg border border-border p-1 sm:scale-100 sm:p-2'
+                          showOutsideDays={false}
+                        />
+                      </div>
                     </div>
                   </div>
                   <div className='space-y-2'>
@@ -182,21 +192,26 @@ export const FieldTraining = ({
             <div className='grid grid-cols-1 gap-3'>
               <div className='space-y-2'>
                 <span className='font-medium'>실습 기간</span>
-                <div className='flex justify-center'>
-                  <Calendar
-                    mode='range'
-                    selected={addDate}
-                    onSelect={(range) => {
-                      setAddDate(range)
-                      setAddFieldTraining((prev) => ({
-                        ...prev,
-                        start_date:
-                          range?.from?.toISOString().split('T')[0] ?? '',
-                        end_date: range?.to?.toISOString().split('T')[0] ?? '',
-                      }))
-                    }}
-                    className='rounded-lg border border-border p-2'
-                  />
+                {/* 두 번째 캘린더도 같은 방식으로 반응형 스타일 적용 */}
+                <div className='w-full overflow-x-auto md:overflow-visible'>
+                  <div className='flex min-w-full justify-center'>
+                    <Calendar
+                      mode='range'
+                      selected={addDate}
+                      onSelect={(range) => {
+                        setAddDate(range)
+                        setAddFieldTraining((prev) => ({
+                          ...prev,
+                          start_date:
+                            range?.from?.toISOString().split('T')[0] ?? '',
+                          end_date:
+                            range?.to?.toISOString().split('T')[0] ?? '',
+                        }))
+                      }}
+                      className='transform-origin-center w-auto max-w-full scale-[0.85] rounded-lg border border-border p-1 sm:scale-100 sm:p-2'
+                      showOutsideDays={false}
+                    />
+                  </div>
                 </div>
               </div>
               <div className='space-y-2'>
@@ -220,9 +235,7 @@ export const FieldTraining = ({
                     ))}
                     <AddFieldTrainingOption
                       type='job'
-                      onClick={() => {
-                        // 여기에 직무 추가 로직 구현 예정
-                      }}
+                      onClick={() => {}}
                       onSuccess={() => {
                         refetchJobs()
                       }}
@@ -230,6 +243,7 @@ export const FieldTraining = ({
                   </SelectContent>
                 </Select>
               </div>
+              {/* 나머지 코드는 동일하게 유지 */}
               <div className='space-y-2'>
                 <span className='font-medium'>회사명</span>
                 <Select
@@ -254,9 +268,7 @@ export const FieldTraining = ({
                     ))}
                     <AddFieldTrainingOption
                       type='company'
-                      onClick={() => {
-                        // 여기에 회사 추가 로직 구현 예정
-                      }}
+                      onClick={() => {}}
                       onSuccess={() => {
                         refetchCompanies()
                       }}
@@ -343,20 +355,20 @@ export const FieldTraining = ({
             <div className='space-y-4'>
               <div className='rounded-md border p-3'>
                 <dl className='space-y-2'>
-                  <div className='flex gap-2'>
+                  <div className='flex flex-col gap-1 sm:flex-row sm:gap-2'>
                     <dt className='w-24 flex-shrink-0 font-medium'>
                       실습 기간:
                     </dt>
                     <dd>{currentFieldTraining.start_date ?? '-'}</dd> ~{' '}
                     <dd>{currentFieldTraining.end_date ?? '-'}</dd>
                   </div>
-                  <div className='flex gap-2'>
+                  <div className='flex flex-col gap-1 sm:flex-row sm:gap-2'>
                     <dt className='w-24 flex-shrink-0 font-medium'>
                       실습 직무:
                     </dt>
                     <dd>{currentFieldTraining.jobs.job_name ?? '-'}</dd>
                   </div>
-                  <div className='flex gap-2'>
+                  <div className='flex flex-col gap-1 sm:flex-row sm:gap-2'>
                     <dt className='w-24 flex-shrink-0 font-medium'>회사명:</dt>
                     <dd>
                       {currentFieldTraining.companies.company_name ?? '-'}
