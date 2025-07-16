@@ -19,6 +19,7 @@ import { UserDetailType, UserEditType } from '../data/schema'
 import { FieldTrainingUpdate } from '../services/field-training/handleFieldTraining'
 import { useJobListQuery } from '../services/field-training/selectJobList'
 import { AddFieldTrainingOption } from './add-field-training-option'
+import { getFormattedDate } from '@/utils/users/getFormattedDate'
 
 type addFieldTrainingType = Pick<
   FieldTrainingUpdate,
@@ -347,8 +348,8 @@ export const FieldTraining = ({
                     <dt className='w-24 flex-shrink-0 font-medium'>
                       실습 기간:
                     </dt>
-                    <dd>{currentFieldTraining.start_date ?? '-'}</dd> ~{' '}
-                    <dd>{currentFieldTraining.end_date ?? '-'}</dd>
+                    <dd>{getFormattedDate(currentFieldTraining.start_date) ?? '-'}</dd> ~{' '}
+                    <dd>{getFormattedDate(currentFieldTraining.end_date) ?? '-'}</dd>
                   </div>
                   <div className='flex gap-2'>
                     <dt className='w-24 flex-shrink-0 font-medium'>
