@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { format } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 import { getCurrentFieldTraining } from '@/utils/users/getCurrentFieldTraining'
 import { Button } from '@/components/ui/button'
@@ -83,8 +84,8 @@ export const FieldTraining = ({
               student_id: currentRow.student_id,
               company_id: currentFieldTraining.company_id,
               job_id: updateJob,
-              start_date: updateDate.from.toISOString().split('T')[0],
-              end_date: updateDate.to.toISOString().split('T')[0],
+              start_date: format(updateDate.from, 'yyyy-MM-dd'),
+              end_date: format(updateDate.to, 'yyyy-MM-dd'),
             },
           },
         },
@@ -110,17 +111,18 @@ export const FieldTraining = ({
                 <div className='grid grid-cols-1 gap-3'>
                   <div className='space-y-2'>
                     <span className='font-medium'>실습 기간</span>
-                    {/* 캘린더 컨테이너에 반응형 스타일 추가 */}
-                    <div className='w-full overflow-x-auto md:overflow-visible'>
-                      <div className='flex min-w-full justify-center'>
-                        <Calendar
-                          mode='range'
-                          selected={updateDate}
-                          onSelect={setUpdateDate}
-                          className='transform-origin-center w-auto max-w-full scale-[0.85] rounded-lg border border-border p-1 sm:scale-100 sm:p-2'
-                          showOutsideDays={false}
-                        />
-                      </div>
+                    <div className='overflow-x-auto pb-2 sm:overflow-visible sm:pb-0'>
+                      <Calendar
+                        mode='range'
+                        selected={updateDate}
+                        onSelect={(value: DateRange | undefined) =>
+                          setUpdateDate(value)
+                        }
+                        showOutsideDays={true}
+                        className='w-full max-w-full rounded-md border'
+                        weekStartsOn={0}
+                        fixedWeeks
+                      />
                     </div>
                   </div>
                   <div className='space-y-2'>
@@ -192,26 +194,21 @@ export const FieldTraining = ({
             <div className='grid grid-cols-1 gap-3'>
               <div className='space-y-2'>
                 <span className='font-medium'>실습 기간</span>
-                {/* 두 번째 캘린더도 같은 방식으로 반응형 스타일 적용 */}
-                <div className='w-full overflow-x-auto md:overflow-visible'>
-                  <div className='flex min-w-full justify-center'>
-                    <Calendar
-                      mode='range'
-                      selected={addDate}
-                      onSelect={(range) => {
-                        setAddDate(range)
-                        setAddFieldTraining((prev) => ({
-                          ...prev,
-                          start_date:
-                            range?.from?.toISOString().split('T')[0] ?? '',
-                          end_date:
-                            range?.to?.toISOString().split('T')[0] ?? '',
-                        }))
-                      }}
-                      className='transform-origin-center w-auto max-w-full scale-[0.85] rounded-lg border border-border p-1 sm:scale-100 sm:p-2'
-                      showOutsideDays={false}
-                    />
-                  </div>
+                <div className='flex justify-center'>
+                  <Calendar
+                    mode='range'
+                    selected={addDate}
+                    onSelect={(range: DateRange | undefined) => {
+                      setAddDate(range)
+                      setAddFieldTraining((prev) => ({
+                        ...prev,
+                        start_date:
+                          range?.from?.toISOString().split('T')[0] ?? '',
+                        end_date: range?.to?.toISOString().split('T')[0] ?? '',
+                      }))
+                    }}
+                    className='w-full max-w-full rounded-lg border border-border p-2'
+                  />
                 </div>
               </div>
               <div className='space-y-2'>
@@ -243,7 +240,6 @@ export const FieldTraining = ({
                   </SelectContent>
                 </Select>
               </div>
-              {/* 나머지 코드는 동일하게 유지 */}
               <div className='space-y-2'>
                 <span className='font-medium'>회사명</span>
                 <Select
@@ -306,7 +302,7 @@ export const FieldTraining = ({
                               ...addFieldTraining,
                               lead_or_part: false,
                               student_id: currentRow.student_id,
-                              created_at: String(new Date()),
+                              created_at: format(new Date(), 'yyyy-MM-dd'),
                             },
                           },
                         },
@@ -327,11 +323,12 @@ export const FieldTraining = ({
                               student_id: currentRow.student_id,
                               company_id: addFieldTraining.company_id,
                               job_id: addFieldTraining.job_id,
-                              start_date: employmentStartDate
-                                .toISOString()
-                                .split('T')[0],
+                              start_date: format(
+                                employmentStartDate,
+                                'yyyy-MM-dd'
+                              ),
                               end_date: null, // 취업 종료일은 null로 설정
-                              created_at: new Date().toISOString(),
+                              created_at: format(new Date(), 'yyyy-MM-dd'),
                             },
                           },
                         })
@@ -359,8 +356,13 @@ export const FieldTraining = ({
                     <dt className='w-24 flex-shrink-0 font-medium'>
                       실습 기간:
                     </dt>
-                    <dd>{currentFieldTraining.start_date ?? '-'}</dd> ~{' '}
-                    <dd>{currentFieldTraining.end_date ?? '-'}</dd>
+                    <dd>
+                      {currentFieldTraining.start_date?.split('T')[0] ?? '-'}
+                    </dd>{' '}
+                    ~{' '}
+                    <dd>
+                      {currentFieldTraining.end_date?.split('T')[0] ?? '-'}
+                    </dd>
                   </div>
                   <div className='flex flex-col gap-1 sm:flex-row sm:gap-2'>
                     <dt className='w-24 flex-shrink-0 font-medium'>
