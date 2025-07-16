@@ -1,8 +1,6 @@
 import Cookies from 'js-cookie'
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
-import { AuthSessionMissingError, User } from '@supabase/supabase-js'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { cn } from '@/lib/utils'
-import supabase from '@/utils/supabase/client'
 import { SearchProvider } from '@/context/search-context'
 import { UserProvider } from '@/context/user-context'
 import { SidebarProvider } from '@/components/ui/sidebar'
@@ -11,28 +9,13 @@ import SkipToMain from '@/components/skip-to-main'
 
 export const Route = createFileRoute('/_authenticated')({
   component: RouteComponent,
-  loader: async () => {
-    const { data, error } = await supabase.auth.getUser()
-    if (error instanceof AuthSessionMissingError) {
-      return redirect({
-        to: '/sign-in',
-      })
-    } else if (error) throw error
-    else if (!(await checkAdmin(data.user.id))) {
-      return redirect({
-        to: '/403',
-      })
-    }
-    return data
-  },
 })
 
 function RouteComponent() {
-  const data: { user: User } = Route.useLoaderData()
   const defaultOpen = Cookies.get('sidebar:state') !== 'false'
 
   return (
-    <UserProvider user={data?.user || null}>
+    <UserProvider user={null}>
       <SearchProvider>
         <SidebarProvider defaultOpen={defaultOpen}>
           <SkipToMain />
@@ -55,15 +38,4 @@ function RouteComponent() {
       </SearchProvider>
     </UserProvider>
   )
-}
-async function checkAdmin(id: string) {
-  const { data, error } = await supabase
-    .from('web_admin_permission')
-    .select('auth_id')
-    .eq('auth_id', id)
-  if (error) {
-    console.error('Error checking admin permissions:', error)
-    throw error
-  }
-  return data && data.length > 0
 }
