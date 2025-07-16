@@ -2,6 +2,7 @@
 
 import { ReactNode } from '@tanstack/react-router'
 import { Pencil, Save, X } from 'lucide-react'
+import { useIsMobile } from '@/hooks/use-mobile'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -83,6 +84,7 @@ const componentsMap: Record<DetailType, ValueItemsType> = {
 }
 
 export function StudentDetail({ student_id }: { student_id: string }) {
+  const isMobile = useIsMobile()
   const { editingSection, setEditingSection, editData, setEditData } =
     useEditUser()
   const { data, isLoading, refetch, isFetching } =
@@ -127,50 +129,55 @@ export function StudentDetail({ student_id }: { student_id: string }) {
     )
 
   return (
-    <div className='h-full space-y-4 overflow-auto p-0 sm:space-y-6 sm:p-1'>
-      <Card className='border-0 shadow-sm sm:border sm:shadow-md'>
-        <CardHeader className='p-3 pb-2 sm:p-6 sm:pb-3'>
-          <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between'>
-            <CardTitle className='mb-2 text-xl sm:mb-0 sm:text-2xl'>
+    <div className='h-full space-y-6 overflow-auto p-1'>
+      <Card>
+        <CardHeader className={isMobile ? 'px-3 pb-2 pt-3' : 'pb-3'}>
+          <div
+            className={`flex ${isMobile ? 'flex-col gap-2' : 'items-center justify-between'}`}
+          >
+            <CardTitle className={isMobile ? 'text-xl' : 'text-2xl'}>
               {data?.name}
             </CardTitle>
             <div className='flex items-center gap-2'>
-              <Badge variant='outline' className='text-xs sm:text-sm'>
+              <Badge variant='outline'>
                 {data?.departments.department_name}
               </Badge>
             </div>
           </div>
         </CardHeader>
 
-        <CardContent className='space-y-4 p-3 sm:space-y-5 sm:p-6'>
+        <CardContent className={isMobile ? 'space-y-4 px-3 py-2' : 'space-y-5'}>
           {(Object.keys(componentsMap) as DetailType[]).map((key) => {
             return (
-              <div
-                key={key}
-                className='rounded-md border border-border/40 bg-card p-2 sm:p-3'
-              >
-                <div className='mb-2 flex flex-col sm:flex-row sm:items-center sm:justify-between'>
-                  <h3 className='mb-1 text-base font-semibold sm:mb-0'>
+              <div key={key}>
+                <div
+                  className={`mb-2 ${isMobile ? 'flex-col gap-2' : 'flex items-center justify-between'}`}
+                >
+                  <h3 className={`font-semibold ${isMobile ? 'mb-2' : ''}`}>
                     {componentsMap[key].label}
                   </h3>
                   {editingSection === key ? (
-                    <div className='flex justify-end gap-2'>
+                    <div className='flex gap-2'>
                       <Button
                         variant='outline'
                         size='sm'
                         onClick={cancelEditing}
-                        className='flex h-8 items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-destructive sm:text-sm'
+                        className={`flex items-center gap-1 text-muted-foreground transition-colors hover:text-destructive ${
+                          isMobile ? 'h-7 px-2 text-xs' : ''
+                        }`}
                       >
-                        <X size={14} className='sm:mr-1' />
-                        <span className='hidden sm:inline'>취소</span>
+                        <X size={isMobile ? 12 : 14} />
+                        <span>취소</span>
                       </Button>
                       <Button
                         size='sm'
                         onClick={saveEditing}
-                        className='flex h-8 items-center gap-1 bg-gradient-to-r from-primary to-primary/90 text-xs sm:text-sm'
+                        className={`flex items-center gap-1 bg-gradient-to-r from-primary to-primary/90 ${
+                          isMobile ? 'h-7 px-2 text-xs' : ''
+                        }`}
                       >
-                        <Save size={14} className='sm:mr-1' />
-                        <span className='hidden sm:inline'>저장</span>
+                        <Save size={isMobile ? 12 : 14} />
+                        <span>저장</span>
                       </Button>
                     </div>
                   ) : componentsMap[key].canEdit !== false ? (
@@ -178,25 +185,24 @@ export function StudentDetail({ student_id }: { student_id: string }) {
                       variant='ghost'
                       size='sm'
                       onClick={() => setEditingSection(key)}
-                      className='flex h-8 items-center gap-1 self-end text-xs text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary sm:text-sm'
+                      className={`flex items-center gap-1 text-muted-foreground transition-colors hover:bg-primary/10 hover:text-primary ${
+                        isMobile ? 'h-7 px-2 text-xs' : ''
+                      }`}
                     >
-                      <Pencil size={14} className='sm:mr-1' />
-                      <span className='hidden sm:inline'>수정</span>
+                      <Pencil size={isMobile ? 12 : 14} />
+                      <span>수정</span>
                     </Button>
                   ) : null}
                 </div>
 
-                <Separator className='my-2' />
-
                 {data ? (
-                  <div className='py-1 text-sm sm:text-base'>
+                  <div className={isMobile ? 'mb-3' : 'mb-5'}>
                     {componentsMap[key].component(data)}
                   </div>
                 ) : (
-                  <div className='py-4 text-center text-sm text-muted-foreground'>
-                    학생 정보가 존재하지 않습니다.
-                  </div>
+                  <div>학생 정보가 존재하지 않습니다.</div>
                 )}
+                <Separator />
               </div>
             )
           })}
