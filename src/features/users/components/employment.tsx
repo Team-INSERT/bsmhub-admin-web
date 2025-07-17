@@ -39,7 +39,7 @@ export const Employment = ({
 
   const [updateDate, setUpdateDate] = useState<DateRange | undefined>(undefined)
   const [updateJob, setUpdateJob] = useState<number | null>(null)
-  const [isWorking, setIsWorking] = useState<boolean>(true)
+  const [isDeleted, setIsDeleted] = useState<boolean>(false)
 
   const [addDate, setAddDate] = useState<DateRange | undefined>(undefined)
   const [addFieldTraining, setAddFieldTraining] =
@@ -57,7 +57,7 @@ export const Employment = ({
           : new Date(),
       })
       setUpdateJob(currentFieldTraining?.job_id ?? null)
-      setIsWorking(currentFieldTraining?.is_working ?? true)
+      setIsDeleted(!!currentFieldTraining?.deleted_at)
       setAddDate(undefined)
       setAddFieldTraining(null)
       setAdd(false)
@@ -83,7 +83,7 @@ export const Employment = ({
               job_id: updateJob,
               start_date: updateDate.from.toISOString().split('T')[0],
               end_date: updateDate.to.toISOString().split('T')[0],
-              is_working: isWorking,
+              deleted_at: isDeleted ? new Date().toISOString() : null,
             },
           },
         },
@@ -92,7 +92,7 @@ export const Employment = ({
   }, [
     updateDate,
     updateJob,
-    isWorking,
+    isDeleted,
     editingSection,
     currentFieldTraining,
     currentRow,
@@ -163,11 +163,11 @@ export const Employment = ({
                   </div>
                   <div className='space-y-2'>
                     <div className='flex items-center space-x-2'>
-                      <span className='font-medium'>취업 중</span>
+                      <span className='font-medium'>취업 삭제</span>
                       <Switch
-                        id='is-working'
-                        checked={isWorking}
-                        onCheckedChange={setIsWorking}
+                        id='is-deleted'
+                        checked={isDeleted}
+                        onCheckedChange={setIsDeleted}
                       />
                     </div>
                   </div>
