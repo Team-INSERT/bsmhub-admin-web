@@ -7,6 +7,7 @@ export type FieldTrainingUpdate = Database['public']['Tables']['field_training']
 
 export const handleFieldTraining = async (editDataList: UserEditType) => {
   for (const editData of editDataList) {
+    if (!('field_training' in editData.datas)) continue
     const data = editData.datas.field_training;
 
     if (!data || !data.company_id || !data.job_id || !data.start_date || !data.end_date || !data.student_id) {

@@ -9,6 +9,7 @@ export type EmploymentCompaniesUpdate =
 
 export const handleEmployment = async (editDataList: UserEditType) => {
   for (const editData of editDataList) {
+    if (!('employment_companies' in editData.datas)) continue
     const data = editData.datas.employment_companies
     if (
       !data ||
@@ -35,7 +36,7 @@ export const handleEmployment = async (editDataList: UserEditType) => {
       start_date: data.start_date,
       end_date: data.end_date,
       job_id: data.job_id,
-      is_working: data.is_working,
+      deleted_at: data.deleted_at,
     }
 
     switch (editData.action) {
@@ -62,7 +63,7 @@ export const handleEmployment = async (editDataList: UserEditType) => {
       case 'delete': {
         const { error } = await supabase
           .from('employment_companies')
-          .delete()
+          .update({ deleted_at: new Date().toISOString() })
           .eq('student_id', data.student_id)
           .eq('company_id', data.company_id)
           .eq('job_id', data.job_id)
