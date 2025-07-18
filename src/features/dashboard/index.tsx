@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { useTheme } from '@/context/theme-context'
 import { Button } from '@/components/ui/button'
 import {
@@ -26,6 +27,27 @@ export default function Dashboard() {
         : 'light'
       : theme
   }`
+  const objectRef = useRef<HTMLObjectElement>(null)
+
+  const handleFullscreen = () => {
+    const el = objectRef.current
+    if (!el) return
+    if (el.requestFullscreen) {
+      el.requestFullscreen()
+    } else if (
+      (el as HTMLObjectElement & { webkitRequestFullscreen?: () => void })
+        .webkitRequestFullscreen
+    ) {
+      ;(el as HTMLObjectElement & { webkitRequestFullscreen?: () => void })
+        .webkitRequestFullscreen!()
+    } else if (
+      (el as HTMLObjectElement & { msRequestFullscreen?: () => void })
+        .msRequestFullscreen
+    ) {
+      ;(el as HTMLObjectElement & { msRequestFullscreen?: () => void })
+        .msRequestFullscreen!()
+    }
+  }
 
   return (
     <>
@@ -40,13 +62,24 @@ export default function Dashboard() {
 
       {/* ===== Main ===== */}
       <Main fixed>
-        <object
-          key={theme}
-          type='text/html'
-          data-testid='grafana-iframe'
-          data={grafanaSrc}
-          className='h-full min-h-[600px] w-full rounded-lg bg-background'
-        ></object>
+        <div className='relative h-full w-full'>
+          <object
+            ref={objectRef}
+            key={theme}
+            type='text/html'
+            data-testid='grafana-iframe'
+            data={grafanaSrc}
+            className='h-full min-h-[600px] w-full rounded-lg bg-background'
+          ></object>
+          <button
+            type='button'
+            onClick={handleFullscreen}
+            className='absolute bottom-4 right-4 z-10 rounded bg-primary px-3 py-2 text-sm text-white shadow-lg transition-colors hover:bg-primary/80'
+            style={{ pointerEvents: 'auto' }}
+          >
+            전체화면
+          </button>
+        </div>
       </Main>
     </>
   )
