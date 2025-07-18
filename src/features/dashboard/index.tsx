@@ -71,14 +71,16 @@ export default function Dashboard() {
             data={grafanaSrc}
             className='h-full min-h-[600px] w-full rounded-lg bg-background'
           ></object>
-          <button
+          <Button
             type='button'
             onClick={handleFullscreen}
-            className='absolute bottom-4 right-4 z-10 rounded bg-primary px-3 py-2 text-sm text-white shadow-lg transition-colors hover:bg-primary/80'
+            variant='default'
+            size='sm'
+            className='absolute bottom-4 right-4 z-10'
             style={{ pointerEvents: 'auto' }}
           >
             전체화면
-          </button>
+          </Button>
         </div>
       </Main>
     </>
