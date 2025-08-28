@@ -3,7 +3,6 @@ import { DateRange } from 'react-day-picker'
 import { getCurrentFieldTraining } from '@/utils/users/getCurrentFieldTraining'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
-import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -173,6 +172,7 @@ export const FieldTraining = ({
                   </div>
                   <div className='flex items-center justify-between pt-2'>
                     <div className='flex items-center space-x-2'>
+                      <span className='font-medium'>삭제</span>
                       <Switch
                         id='delete-field-training'
                         checked={deleteToggle}
@@ -196,9 +196,6 @@ export const FieldTraining = ({
                           }
                         }}
                       />
-                      <Label htmlFor='delete-field-training' className='text-destructive font-medium'>
-                        삭제
-                      </Label>
                     </div>
                   </div>
                 </div>
