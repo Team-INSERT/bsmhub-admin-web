@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { format } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 import { getCurrentFieldTraining } from '@/utils/users/getCurrentFieldTraining'
 import { Button } from '@/components/ui/button'
@@ -85,14 +86,21 @@ export const FieldTraining = ({
               student_id: currentRow.student_id,
               company_id: currentFieldTraining.company_id,
               job_id: updateJob,
-              start_date: updateDate.from.toISOString().split('T')[0],
-              end_date: updateDate.to.toISOString().split('T')[0],
+              start_date: format(updateDate.from, 'yyyy-MM-dd'),
+              end_date: format(updateDate.to, 'yyyy-MM-dd'),
             },
           },
         },
       ])
     }
-  }, [updateDate, updateJob, editingSection, currentFieldTraining, currentRow, setEditData])
+  }, [
+    updateDate,
+    updateJob,
+    editingSection,
+    currentFieldTraining,
+    currentRow,
+    setEditData,
+  ])
 
   return (
     <div>
@@ -105,12 +113,17 @@ export const FieldTraining = ({
                 <div className='grid grid-cols-1 gap-3'>
                   <div className='space-y-2'>
                     <span className='font-medium'>실습 기간</span>
-                    <div className='flex justify-center'>
+                    <div className='overflow-x-auto pb-2 sm:overflow-visible sm:pb-0'>
                       <Calendar
                         mode='range'
                         selected={updateDate}
-                        onSelect={setUpdateDate}
-                        className='rounded-lg border border-border p-2'
+                        onSelect={(value: DateRange | undefined) =>
+                          setUpdateDate(value)
+                        }
+                        showOutsideDays={true}
+                        className='w-full max-w-full rounded-md border'
+                        weekStartsOn={0}
+                        fixedWeeks
                       />
                     </div>
                   </div>
@@ -215,7 +228,7 @@ export const FieldTraining = ({
                   <Calendar
                     mode='range'
                     selected={addDate}
-                    onSelect={(range) => {
+                    onSelect={(range: DateRange | undefined) => {
                       setAddDate(range)
                       setAddFieldTraining((prev) => ({
                         ...prev,
@@ -224,7 +237,7 @@ export const FieldTraining = ({
                         end_date: range?.to?.toISOString().split('T')[0] ?? '',
                       }))
                     }}
-                    className='rounded-lg border border-border p-2'
+                    className='w-full max-w-full rounded-lg border border-border p-2'
                   />
                 </div>
               </div>
@@ -249,9 +262,7 @@ export const FieldTraining = ({
                     ))}
                     <AddFieldTrainingOption
                       type='job'
-                      onClick={() => {
-                        // 여기에 직무 추가 로직 구현 예정
-                      }}
+                      onClick={() => {}}
                       onSuccess={() => {
                         refetchJobs()
                       }}
@@ -283,9 +294,7 @@ export const FieldTraining = ({
                     ))}
                     <AddFieldTrainingOption
                       type='company'
-                      onClick={() => {
-                        // 여기에 회사 추가 로직 구현 예정
-                      }}
+                      onClick={() => {}}
                       onSuccess={() => {
                         refetchCompanies()
                       }}
@@ -323,7 +332,7 @@ export const FieldTraining = ({
                               ...addFieldTraining,
                               lead_or_part: false,
                               student_id: currentRow.student_id,
-                              created_at: String(new Date()),
+                              created_at: format(new Date(), 'yyyy-MM-dd'),
                             },
                           },
                         },
@@ -344,11 +353,12 @@ export const FieldTraining = ({
                               student_id: currentRow.student_id,
                               company_id: addFieldTraining.company_id,
                               job_id: addFieldTraining.job_id,
-                              start_date: employmentStartDate
-                                .toISOString()
-                                .split('T')[0],
+                              start_date: format(
+                                employmentStartDate,
+                                'yyyy-MM-dd'
+                              ),
                               end_date: null, // 취업 종료일은 null로 설정
-                              created_at: new Date().toISOString(),
+                              created_at: format(new Date(), 'yyyy-MM-dd'),
                             },
                           },
                         })
@@ -372,20 +382,25 @@ export const FieldTraining = ({
             <div className='space-y-4'>
               <div className='rounded-md border p-3'>
                 <dl className='space-y-2'>
-                  <div className='flex gap-2'>
+                  <div className='flex flex-col gap-1 sm:flex-row sm:gap-2'>
                     <dt className='w-24 flex-shrink-0 font-medium'>
                       실습 기간:
                     </dt>
-                    <dd>{currentFieldTraining.start_date ?? '-'}</dd> ~{' '}
-                    <dd>{currentFieldTraining.end_date ?? '-'}</dd>
+                    <dd>
+                      {currentFieldTraining.start_date?.split('T')[0] ?? '-'}
+                    </dd>{' '}
+                    ~{' '}
+                    <dd>
+                      {currentFieldTraining.end_date?.split('T')[0] ?? '-'}
+                    </dd>
                   </div>
-                  <div className='flex gap-2'>
+                  <div className='flex flex-col gap-1 sm:flex-row sm:gap-2'>
                     <dt className='w-24 flex-shrink-0 font-medium'>
                       실습 직무:
                     </dt>
                     <dd>{currentFieldTraining.jobs.job_name ?? '-'}</dd>
                   </div>
-                  <div className='flex gap-2'>
+                  <div className='flex flex-col gap-1 sm:flex-row sm:gap-2'>
                     <dt className='w-24 flex-shrink-0 font-medium'>회사명:</dt>
                     <dd>
                       {currentFieldTraining.companies.company_name ?? '-'}
