@@ -27,7 +27,7 @@ export default function UsersProvider({ children }: Props) {
       value={{ open, setOpen, setOpenState, currentRow, setCurrentRow }}
     >
       {children}
-    </UsersContext>
+    </UsersContext.Provider>
   )
 }
 
