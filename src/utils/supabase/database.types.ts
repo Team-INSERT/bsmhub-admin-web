@@ -675,7 +675,6 @@ export type Database = {
           deleted_at: string | null
           employment_id: number
           end_date: string | null
-          is_working: boolean
           job_id: number
           salary: number | null
           start_date: string
@@ -687,7 +686,6 @@ export type Database = {
           deleted_at?: string | null
           employment_id?: number
           end_date?: string | null
-          is_working?: boolean
           job_id: number
           salary?: number | null
           start_date: string
@@ -699,7 +697,6 @@ export type Database = {
           deleted_at?: string | null
           employment_id?: number
           end_date?: string | null
-          is_working?: boolean
           job_id?: number
           salary?: number | null
           start_date?: string
