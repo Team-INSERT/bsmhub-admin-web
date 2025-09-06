@@ -9,7 +9,7 @@ export const useUserDetailQuery = (
     const { data, error } = await supabase
       .from('student')
       .select(
-        `student_id, name,
+        `*,
         departments(*),
         student_jobs(
           jobs(*)
@@ -49,9 +49,11 @@ export const useUserDetailQuery = (
       `
       )
       .eq('student_id', student_id)
+      .single()
 
     if (error) {
       console.error('Error : ', error)
+      throw new Error(error.message)
     }
 
     return data
@@ -73,23 +75,30 @@ export const useUserDetailQuery = (
       `
       )
       .eq('student_id', student_id)
+      .single()
 
     if (error) {
       console.error('Error : ', error)
+      throw new Error(error.message)
     }
 
     return data
   }
 
-  const selectUserDetail = async () => {
+  const selectUserDetail = async (): Promise<UserDetailType> => {
     const userDatas = await selectUserDatas()
     const profileDatas = await selectProfileDatas()
 
-    if (userDatas && profileDatas)
-      return {
-        ...userDatas[0],
-        ...profileDatas[0],
-      }
+    if (!userDatas || !profileDatas) {
+      throw new Error('User data or profile data not found')
+    }
+
+    const { profile } = profileDatas
+
+    return {
+      ...userDatas,
+      profile: profile || {},
+    } as UserDetailType
   }
 
   return useQuery({

@@ -30,6 +30,7 @@ export const CompanyFormField = React.memo(
               placeholder={placeholder}
               className='col-span-4'
               {...field}
+              value={field.value || ''}
             />
           </FormControl>
           <FormMessage className='col-span-4 col-start-3' />
