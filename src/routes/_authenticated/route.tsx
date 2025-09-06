@@ -85,11 +85,9 @@ async function getAdminStatus(id: string) {
   ])
 
   if (permission.error) {
-    console.error('Error checking admin permissions:', permission.error)
     throw permission.error
   }
   if (readonly.error) {
-    console.error('Error checking admin readonly permissions:', readonly.error)
     throw readonly.error
   }
 
