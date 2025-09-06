@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
-import { AuthSessionMissingError, User } from '@supabase/supabase-js'
 import { IconAlertTriangle } from '@tabler/icons-react'
+import { AuthSessionMissingError, User } from '@supabase/supabase-js'
 import { cn } from '@/lib/utils'
 import supabase from '@/utils/supabase/client'
 import { SearchProvider } from '@/context/search-context'
@@ -36,9 +36,12 @@ export const Route = createFileRoute('/_authenticated')({
 
 function ReadOnlyBanner() {
   return (
-    <div className="flex items-center justify-center gap-2 bg-warning p-2 text-center text-sm text-warning-foreground">
+    <div className='flex items-center justify-center gap-2 bg-warning p-2 text-center text-sm text-warning-foreground'>
       <IconAlertTriangle size={16} />
-      <span>이 계정은 읽기 전용입니다.</span>
+      <span>
+        이 계정은 읽기 전용입니다. 수정 권한을 위해선 insert25.team@gmail.com 로
+        연락주세요.
+      </span>
     </div>
   )
 }
@@ -48,29 +51,31 @@ function RouteComponent() {
   const defaultOpen = Cookies.get('sidebar:state') !== 'false'
 
   return (
-    <UserProvider user={user || null}>
-      <SearchProvider>
-        <SidebarProvider defaultOpen={defaultOpen}>
-          {isReadonly && <ReadOnlyBanner />}
-          <SkipToMain />
-          <AppSidebar />
-          <div
-            id='content'
-            className={cn(
-              'ml-auto w-full max-w-full',
-              'peer-data-[state=collapsed]:w-[calc(100%-var(--sidebar-width-icon)-1rem)]',
-              'peer-data-[state=expanded]:w-[calc(100%-var(--sidebar-width))]',
-              'transition-[width] duration-200 ease-linear',
-              'flex h-svh flex-col',
-              'group-data-[scroll-locked=1]/body:h-full',
-              'group-data-[scroll-locked=1]/body:has-[main.fixed-main]:h-svh'
-            )}
-          >
-            <Outlet />
-          </div>
-        </SidebarProvider>
-      </SearchProvider>
-    </UserProvider>
+    <>
+      <UserProvider user={user || null}>
+        <SearchProvider>
+          <SidebarProvider defaultOpen={defaultOpen}>
+            <SkipToMain />
+            <AppSidebar />
+            <div
+              id='content'
+              className={cn(
+                'ml-auto w-full max-w-full',
+                'peer-data-[state=collapsed]:w-[calc(100%-var(--sidebar-width-icon)-1rem)]',
+                'peer-data-[state=expanded]:w-[calc(100%-var(--sidebar-width))]',
+                'transition-[width] duration-200 ease-linear',
+                'flex h-svh flex-col',
+                'group-data-[scroll-locked=1]/body:h-full',
+                'group-data-[scroll-locked=1]/body:has-[main.fixed-main]:h-svh'
+              )}
+            >
+              {isReadonly && <ReadOnlyBanner />}
+              <Outlet />
+            </div>
+          </SidebarProvider>
+        </SearchProvider>
+      </UserProvider>
+    </>
   )
 }
 async function getAdminStatus(id: string) {
