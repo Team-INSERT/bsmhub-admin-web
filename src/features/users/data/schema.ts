@@ -89,9 +89,10 @@ export type UserDetailType = MergeDeep<
   }
 >
 
-export type UserEditType = {
-  action: 'add' | 'update' | 'delete'
-  datas: 
-    | { field_training: BaseType['field_training']['Update'] }
-    | { employment_companies: BaseType['employment_companies']['Update'] }
-}[]
+export type MutationAction = 'add' | 'update' | 'delete'
+export type MutationOperation = {
+  tableName: string
+  action: MutationAction
+  data: Record<string, any>
+  matchColumns?: Record<string, any>
+}
