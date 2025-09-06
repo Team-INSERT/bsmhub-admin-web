@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
-import { AuthSessionMissingError, User } from '@supabase/supabase-js'
 import { IconAlertTriangle } from '@tabler/icons-react'
+import { AuthSessionMissingError, User } from '@supabase/supabase-js'
 import { cn } from '@/lib/utils'
 import supabase from '@/utils/supabase/client'
 import { SearchProvider } from '@/context/search-context'
@@ -35,27 +35,24 @@ export const Route = createFileRoute('/_authenticated')({
 })
 
 function ReadOnlyBanner() {
-  const bannerText = '이 계정은 읽기 전용입니다. 수정 권한을 위해선 insert25.team@gmail.com 로 연락주세요.'
+  const bannerText =
+    '이 계정은 읽기 전용입니다. 수정 권한을 위해선 insert25.team@gmail.com 로 연락주세요.'
   const BannerContent = () => (
     <>
-      <span className="mx-4">{bannerText}</span>
-      <span className="mx-4">{bannerText}</span>
-      <span className="mx-4">{bannerText}</span>
-      <span className="mx-4">{bannerText}</span>
-      <span className="mx-4">{bannerText}</span>
+      <IconAlertTriangle className='flex-shrink-0' size={16} />
+      <span className='mx-4'>{bannerText}</span>
     </>
   )
 
   return (
-    <div className="flex items-center gap-2 overflow-hidden bg-warning p-2 text-sm text-warning-foreground">
-      <IconAlertTriangle className="flex-shrink-0" size={16} />
-      <div className="flex min-w-0 flex-1">
-        <div className="flex w-full flex-shrink-0 animate-marquee items-center whitespace-nowrap">
+    <div className='flex items-center gap-2 overflow-hidden bg-warning p-2 text-sm text-warning-foreground'>
+      <div className='flex min-w-0 flex-1'>
+        <div className='animate-marquee flex w-full flex-shrink-0 items-center whitespace-nowrap'>
           <BannerContent />
         </div>
         <div
-          className="flex w-full flex-shrink-0 animate-marquee items-center whitespace-nowrap"
-          aria-hidden="true"
+          className='animate-marquee flex w-full flex-shrink-0 items-center whitespace-nowrap'
+          aria-hidden='true'
         >
           <BannerContent />
         </div>
@@ -69,29 +66,31 @@ function RouteComponent() {
   const defaultOpen = Cookies.get('sidebar:state') !== 'false'
 
   return (
-    <UserProvider user={user || null}>
-      <SearchProvider>
-        <SidebarProvider defaultOpen={defaultOpen}>
-          {isReadonly && <ReadOnlyBanner />}
-          <SkipToMain />
-          <AppSidebar />
-          <div
-            id='content'
-            className={cn(
-              'ml-auto w-full max-w-full',
-              'peer-data-[state=collapsed]:w-[calc(100%-var(--sidebar-width-icon)-1rem)]',
-              'peer-data-[state=expanded]:w-[calc(100%-var(--sidebar-width))]',
-              'transition-[width] duration-200 ease-linear',
-              'flex h-svh flex-col',
-              'group-data-[scroll-locked=1]/body:h-full',
-              'group-data-[scroll-locked=1]/body:has-[main.fixed-main]:h-svh'
-            )}
-          >
-            <Outlet />
-          </div>
-        </SidebarProvider>
-      </SearchProvider>
-    </UserProvider>
+    <>
+      {isReadonly && <ReadOnlyBanner />}
+      <UserProvider user={user || null}>
+        <SearchProvider>
+          <SidebarProvider defaultOpen={defaultOpen}>
+            <SkipToMain />
+            <AppSidebar />
+            <div
+              id='content'
+              className={cn(
+                'ml-auto w-full max-w-full',
+                'peer-data-[state=collapsed]:w-[calc(100%-var(--sidebar-width-icon)-1rem)]',
+                'peer-data-[state=expanded]:w-[calc(100%-var(--sidebar-width))]',
+                'transition-[width] duration-200 ease-linear',
+                'flex h-svh flex-col',
+                'group-data-[scroll-locked=1]/body:h-full',
+                'group-data-[scroll-locked=1]/body:has-[main.fixed-main]:h-svh'
+              )}
+            >
+              <Outlet />
+            </div>
+          </SidebarProvider>
+        </SearchProvider>
+      </UserProvider>
+    </>
   )
 }
 async function getAdminStatus(id: string) {
