@@ -1,22 +1,12 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
+import { IconMaximize, IconMinimize } from '@tabler/icons-react'
 import { useTheme } from '@/context/theme-context'
 import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
-import { TopNav } from '@/components/layout/top-nav'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import { Overview } from './components/overview'
-import { RecentSales } from './components/recent-sales'
 
 export default function Dashboard() {
   const { theme } = useTheme()
@@ -28,24 +18,33 @@ export default function Dashboard() {
       : theme
   }`
   const objectRef = useRef<HTMLObjectElement>(null)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   const handleFullscreen = () => {
     const el = objectRef.current
     if (!el) return
-    if (el.requestFullscreen) {
-      el.requestFullscreen()
-    } else if (
-      (el as HTMLObjectElement & { webkitRequestFullscreen?: () => void })
-        .webkitRequestFullscreen
-    ) {
-      ;(el as HTMLObjectElement & { webkitRequestFullscreen?: () => void })
-        .webkitRequestFullscreen!()
-    } else if (
-      (el as HTMLObjectElement & { msRequestFullscreen?: () => void })
-        .msRequestFullscreen
-    ) {
-      ;(el as HTMLObjectElement & { msRequestFullscreen?: () => void })
-        .msRequestFullscreen!()
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+      setIsFullscreen(false)
+    } else {
+      if (el.requestFullscreen) {
+        el.requestFullscreen()
+        setIsFullscreen(true)
+      } else if (
+        (el as HTMLObjectElement & { webkitRequestFullscreen?: () => void })
+          .webkitRequestFullscreen
+      ) {
+        ;(el as HTMLObjectElement & { webkitRequestFullscreen?: () => void })
+          .webkitRequestFullscreen!()
+        setIsFullscreen(true)
+      } else if (
+        (el as HTMLObjectElement & { msRequestFullscreen?: () => void })
+          .msRequestFullscreen
+      ) {
+        ;(el as HTMLObjectElement & { msRequestFullscreen?: () => void })
+          .msRequestFullscreen!()
+        setIsFullscreen(true)
+      }
     }
   }
 
@@ -78,7 +77,11 @@ export default function Dashboard() {
             className='absolute bottom-4 right-4 z-10'
             style={{ pointerEvents: 'auto' }}
           >
-            전체화면
+            {isFullscreen ? (
+              <IconMinimize size={16} />
+            ) : (
+              <IconMaximize size={16} />
+            )}
           </Button>
         </div>
       </Main>
