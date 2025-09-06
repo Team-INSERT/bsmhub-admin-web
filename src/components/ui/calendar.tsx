@@ -99,17 +99,17 @@ function Calendar({
           defaultClassNames.week_number
         ),
         day: cn(
-          "group/day relative aspect-square h-full w-full select-none p-0 text-c…enter [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data…-selected=true]_button]:rounded-r-md",
+          "group/day relative h-full w-full select-none p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data…-selected=true]_button]:rounded-r-md",
           defaultClassNames.day
         ),
-        range_start: cn("rounded-l-md", defaultClassNames.range_start),
+        range_start: cn("rounded-l-md bg-accent", defaultClassNames.range_start),
         range_middle: cn(
           "rounded-none bg-accent",
           defaultClassNames.range_middle
         ),
-        range_end: cn("rounded-r-md", defaultClassNames.range_end),
+        range_end: cn("rounded-r-md bg-accent", defaultClassNames.range_end),
         today: cn(
-          "bg-accent text-accent-foreground rounded-md data-[selected=true]:roun…ded-none",
+          "bg-warning rounded-md data-[selected=true]:rounded-none data-[selected=true]:bg-accent",
           defaultClassNames.today
         ),
         outside: cn(
