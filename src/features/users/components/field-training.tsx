@@ -3,7 +3,6 @@ import { DateRange } from 'react-day-picker'
 import { getCurrentFieldTraining } from '@/utils/users/getCurrentFieldTraining'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
-import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -48,6 +47,7 @@ export const FieldTraining = ({
     useState<addFieldTrainingType | null>(null)
   const [add, setAdd] = useState<boolean>(false)
   const [autoEmployment, setAutoEmployment] = useState<boolean>(false)
+  const [deleteToggle, setDeleteToggle] = useState<boolean>(false)
 
   useEffect(() => {
     if (!editingSection) {
@@ -64,6 +64,7 @@ export const FieldTraining = ({
       setAddFieldTraining(null)
       setAdd(false)
       setAutoEmployment(false)
+      setDeleteToggle(false)
     }
   }, [editingSection, currentFieldTraining])
 
@@ -168,6 +169,34 @@ export const FieldTraining = ({
                         />
                       </SelectContent>
                     </Select>
+                  </div>
+                  <div className='flex items-center justify-between pt-2'>
+                    <div className='flex items-center space-x-2'>
+                      <span className='font-medium'>삭제</span>
+                      <Switch
+                        id='delete-field-training'
+                        checked={deleteToggle}
+                        onCheckedChange={(checked) => {
+                          setDeleteToggle(checked)
+                          if (checked && currentFieldTraining && currentRow) {
+                            setEditData([
+                              {
+                                action: 'delete',
+                                datas: {
+                                  field_training: {
+                                    student_id: currentRow.student_id,
+                                    company_id: currentFieldTraining.company_id,
+                                    job_id: currentFieldTraining.job_id,
+                                    start_date: currentFieldTraining.start_date,
+                                    end_date: currentFieldTraining.end_date ?? '',
+                                  },
+                                },
+                              },
+                            ])
+                          }
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

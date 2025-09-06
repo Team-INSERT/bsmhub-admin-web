@@ -58,7 +58,7 @@ const componentsMap: Record<DetailType, ValueItemsType> = {
   },
   employment: {
     label: '취업',
-    component: (data) => <Employment datas={data.employment_companies.filter((item: UserDetailType['employment_companies'][0]) => item.is_working)} />,
+    component: (data) => <Employment datas={data.employment_companies.filter((item: UserDetailType['employment_companies'][0]) => !item.deleted_at)} />,
   },
   university: {
     label: '대학교 진학',

@@ -33,10 +33,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'chat_messages_conversation_id_fkey'
-            columns: ['conversation_id']
-            referencedRelation: 'conversations'
-            referencedColumns: ['conversation_id']
+            foreignKeyName: "chat_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            referencedRelation: "conversations"
+            referencedColumns: ["conversation_id"]
           },
         ]
       }
@@ -82,26 +82,26 @@ export type Database = {
           collection_id: number
           created_at: string
           item_address: number
-          item_type: Database['public']['Enums']['collection_item_type']
+          item_type: Database["public"]["Enums"]["collection_item_type"]
         }
         Insert: {
           collection_id: number
           created_at?: string
           item_address: number
-          item_type?: Database['public']['Enums']['collection_item_type']
+          item_type?: Database["public"]["Enums"]["collection_item_type"]
         }
         Update: {
           collection_id?: number
           created_at?: string
           item_address?: number
-          item_type?: Database['public']['Enums']['collection_item_type']
+          item_type?: Database["public"]["Enums"]["collection_item_type"]
         }
         Relationships: [
           {
-            foreignKeyName: 'collection_items_collection_id_fkey'
-            columns: ['collection_id']
-            referencedRelation: 'collections'
-            referencedColumns: ['collection_id']
+            foreignKeyName: "collection_items_collection_id_fkey"
+            columns: ["collection_id"]
+            referencedRelation: "collections"
+            referencedColumns: ["collection_id"]
           },
         ]
       }
@@ -116,7 +116,7 @@ export type Database = {
           is_competition: boolean
           owner: string
           view: number
-          visibility: Database['collection']['Enums']['visibility']
+          visibility: Database["collection"]["Enums"]["visibility"]
         }
         Insert: {
           collection_id?: number
@@ -128,7 +128,7 @@ export type Database = {
           is_competition?: boolean
           owner?: string
           view?: number
-          visibility?: Database['collection']['Enums']['visibility']
+          visibility?: Database["collection"]["Enums"]["visibility"]
         }
         Update: {
           collection_id?: number
@@ -140,7 +140,7 @@ export type Database = {
           is_competition?: boolean
           owner?: string
           view?: number
-          visibility?: Database['collection']['Enums']['visibility']
+          visibility?: Database["collection"]["Enums"]["visibility"]
         }
         Relationships: []
       }
@@ -165,10 +165,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'competition_collection_id_fkey'
-            columns: ['collection_id']
-            referencedRelation: 'collections'
-            referencedColumns: ['collection_id']
+            foreignKeyName: "competition_collection_id_fkey"
+            columns: ["collection_id"]
+            referencedRelation: "collections"
+            referencedColumns: ["collection_id"]
           },
         ]
       }
@@ -190,10 +190,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'collection_award_collection_id_fkey'
-            columns: ['collection_id']
-            referencedRelation: 'collections'
-            referencedColumns: ['collection_id']
+            foreignKeyName: "collection_award_collection_id_fkey"
+            columns: ["collection_id"]
+            referencedRelation: "collections"
+            referencedColumns: ["collection_id"]
           },
         ]
       }
@@ -215,10 +215,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'competition_jurors_collection_id_fkey'
-            columns: ['collection_id']
-            referencedRelation: 'collections'
-            referencedColumns: ['collection_id']
+            foreignKeyName: "competition_jurors_collection_id_fkey"
+            columns: ["collection_id"]
+            referencedRelation: "collections"
+            referencedColumns: ["collection_id"]
           },
         ]
       }
@@ -230,7 +230,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      visibility: 'public' | 'partially public' | 'private'
+      visibility: "public" | "partially public" | "private"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -265,10 +265,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'community_posts_profile_id_fkey'
-            columns: ['profile_id']
-            referencedRelation: 'profile'
-            referencedColumns: ['profile_id']
+            foreignKeyName: "community_posts_profile_id_fkey"
+            columns: ["profile_id"]
+            referencedRelation: "profile"
+            referencedColumns: ["profile_id"]
           },
         ]
       }
@@ -382,9 +382,7 @@ export type Database = {
     }
     Functions: {
       get_auth: {
-        Args: {
-          p_usename: string
-        }
+        Args: { p_usename: string }
         Returns: {
           username: string
           password: string
@@ -521,10 +519,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'chat_messages_conversation_id_fkey'
-            columns: ['conversation_id']
-            referencedRelation: 'conversations'
-            referencedColumns: ['conversation_id']
+            foreignKeyName: "chat_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            referencedRelation: "conversations"
+            referencedColumns: ["conversation_id"]
           },
         ]
       }
@@ -651,22 +649,22 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'dream_job_student_id_fkey'
-            columns: ['student_id']
-            referencedRelation: 'student'
-            referencedColumns: ['student_id']
+            foreignKeyName: "dream_job_student_id_fkey"
+            columns: ["student_id"]
+            referencedRelation: "student"
+            referencedColumns: ["student_id"]
           },
           {
-            foreignKeyName: 'dream_jobs_company_id_fkey'
-            columns: ['company_id']
-            referencedRelation: 'companies'
-            referencedColumns: ['company_id']
+            foreignKeyName: "dream_jobs_company_id_fkey"
+            columns: ["company_id"]
+            referencedRelation: "companies"
+            referencedColumns: ["company_id"]
           },
           {
-            foreignKeyName: 'dream_jobs_job_id_fkey'
-            columns: ['job_id']
-            referencedRelation: 'jobs'
-            referencedColumns: ['job_id']
+            foreignKeyName: "dream_jobs_job_id_fkey"
+            columns: ["job_id"]
+            referencedRelation: "jobs"
+            referencedColumns: ["job_id"]
           },
         ]
       }
@@ -674,6 +672,7 @@ export type Database = {
         Row: {
           company_id: number
           created_at: string
+          deleted_at: string | null
           employment_id: number
           end_date: string | null
           is_working: boolean
@@ -685,6 +684,7 @@ export type Database = {
         Insert: {
           company_id: number
           created_at?: string
+          deleted_at?: string | null
           employment_id?: number
           end_date?: string | null
           is_working?: boolean
@@ -696,6 +696,7 @@ export type Database = {
         Update: {
           company_id?: number
           created_at?: string
+          deleted_at?: string | null
           employment_id?: number
           end_date?: string | null
           is_working?: boolean
@@ -706,22 +707,22 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'employment_companies_company_id_fkey1'
-            columns: ['company_id']
-            referencedRelation: 'companies'
-            referencedColumns: ['company_id']
+            foreignKeyName: "employment_companies_company_id_fkey1"
+            columns: ["company_id"]
+            referencedRelation: "companies"
+            referencedColumns: ["company_id"]
           },
           {
-            foreignKeyName: 'employment_companies_job_id_fkey1'
-            columns: ['job_id']
-            referencedRelation: 'jobs'
-            referencedColumns: ['job_id']
+            foreignKeyName: "employment_companies_job_id_fkey1"
+            columns: ["job_id"]
+            referencedRelation: "jobs"
+            referencedColumns: ["job_id"]
           },
           {
-            foreignKeyName: 'employment_companies_student_id_fkey'
-            columns: ['student_id']
-            referencedRelation: 'student'
-            referencedColumns: ['student_id']
+            foreignKeyName: "employment_companies_student_id_fkey"
+            columns: ["student_id"]
+            referencedRelation: "student"
+            referencedColumns: ["student_id"]
           },
         ]
       }
@@ -729,6 +730,7 @@ export type Database = {
         Row: {
           company_id: number
           created_at: string
+          deleted_at: string | null
           end_date: string | null
           job_id: number
           lead_or_part: boolean | null
@@ -738,6 +740,7 @@ export type Database = {
         Insert: {
           company_id: number
           created_at?: string
+          deleted_at?: string | null
           end_date?: string | null
           job_id: number
           lead_or_part?: boolean | null
@@ -747,6 +750,7 @@ export type Database = {
         Update: {
           company_id?: number
           created_at?: string
+          deleted_at?: string | null
           end_date?: string | null
           job_id?: number
           lead_or_part?: boolean | null
@@ -755,22 +759,22 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'field_training_company_id_fkey1'
-            columns: ['company_id']
-            referencedRelation: 'companies'
-            referencedColumns: ['company_id']
+            foreignKeyName: "field_training_company_id_fkey1"
+            columns: ["company_id"]
+            referencedRelation: "companies"
+            referencedColumns: ["company_id"]
           },
           {
-            foreignKeyName: 'field_training_job_id_fkey1'
-            columns: ['job_id']
-            referencedRelation: 'jobs'
-            referencedColumns: ['job_id']
+            foreignKeyName: "field_training_job_id_fkey1"
+            columns: ["job_id"]
+            referencedRelation: "jobs"
+            referencedColumns: ["job_id"]
           },
           {
-            foreignKeyName: 'field_training_student_id_fkey'
-            columns: ['student_id']
-            referencedRelation: 'student'
-            referencedColumns: ['student_id']
+            foreignKeyName: "field_training_student_id_fkey"
+            columns: ["student_id"]
+            referencedRelation: "student"
+            referencedColumns: ["student_id"]
           },
         ]
       }
@@ -807,25 +811,25 @@ export type Database = {
       markdown_pictures: {
         Row: {
           image_id: number
-          '\bimage_url': string
+          "\bimage_url": string
           mark_id: number
         }
         Insert: {
           image_id?: number
-          '\bimage_url': string
+          "\bimage_url": string
           mark_id: number
         }
         Update: {
           image_id?: number
-          '\bimage_url'?: string
+          "\bimage_url"?: string
           mark_id?: number
         }
         Relationships: [
           {
-            foreignKeyName: 'markdown_picture_mark_id_fkey'
-            columns: ['mark_id']
-            referencedRelation: 'project_markdown'
-            referencedColumns: ['mark_id']
+            foreignKeyName: "markdown_picture_mark_id_fkey"
+            columns: ["mark_id"]
+            referencedRelation: "project_markdown"
+            referencedColumns: ["mark_id"]
           },
         ]
       }
@@ -880,16 +884,16 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'military_services_military_service_status_id_fkey'
-            columns: ['military_service_status_id']
-            referencedRelation: 'military_service_statuses'
-            referencedColumns: ['military_service_status_id']
+            foreignKeyName: "military_services_military_service_status_id_fkey"
+            columns: ["military_service_status_id"]
+            referencedRelation: "military_service_statuses"
+            referencedColumns: ["military_service_status_id"]
           },
           {
-            foreignKeyName: 'military_services_student_id_fkey'
-            columns: ['student_id']
-            referencedRelation: 'student'
-            referencedColumns: ['student_id']
+            foreignKeyName: "military_services_student_id_fkey"
+            columns: ["student_id"]
+            referencedRelation: "student"
+            referencedColumns: ["student_id"]
           },
         ]
       }
@@ -941,16 +945,16 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'profile_competitions_competition_id_fkey'
-            columns: ['competition_id']
-            referencedRelation: 'competitions'
-            referencedColumns: ['competition_id']
+            foreignKeyName: "profile_competitions_competition_id_fkey"
+            columns: ["competition_id"]
+            referencedRelation: "competitions"
+            referencedColumns: ["competition_id"]
           },
           {
-            foreignKeyName: 'profile_competitions_profile_id_fkey'
-            columns: ['profile_id']
-            referencedRelation: 'profile'
-            referencedColumns: ['profile_id']
+            foreignKeyName: "profile_competitions_profile_id_fkey"
+            columns: ["profile_id"]
+            referencedRelation: "profile"
+            referencedColumns: ["profile_id"]
           },
         ]
       }
@@ -969,10 +973,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'profile_introduce_profile_id_fkey'
-            columns: ['profile_id']
-            referencedRelation: 'profile'
-            referencedColumns: ['profile_id']
+            foreignKeyName: "profile_introduce_profile_id_fkey"
+            columns: ["profile_id"]
+            referencedRelation: "profile"
+            referencedColumns: ["profile_id"]
           },
         ]
       }
@@ -994,10 +998,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'profile_link_profile_id_fkey'
-            columns: ['profile_id']
-            referencedRelation: 'profile'
-            referencedColumns: ['profile_id']
+            foreignKeyName: "profile_link_profile_id_fkey"
+            columns: ["profile_id"]
+            referencedRelation: "profile"
+            referencedColumns: ["profile_id"]
           },
         ]
       }
@@ -1016,16 +1020,16 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'profile_permission_profile_id_fkey'
-            columns: ['profile_id']
-            referencedRelation: 'profile'
-            referencedColumns: ['profile_id']
+            foreignKeyName: "profile_permission_profile_id_fkey"
+            columns: ["profile_id"]
+            referencedRelation: "profile"
+            referencedColumns: ["profile_id"]
           },
           {
-            foreignKeyName: 'profile_permission_student_id_fkey'
-            columns: ['student_id']
-            referencedRelation: 'student'
-            referencedColumns: ['student_id']
+            foreignKeyName: "profile_permission_student_id_fkey"
+            columns: ["student_id"]
+            referencedRelation: "student"
+            referencedColumns: ["student_id"]
           },
         ]
       }
@@ -1044,22 +1048,22 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'fk_profile_skills_skill_id'
-            columns: ['skill_id']
-            referencedRelation: 'skills'
-            referencedColumns: ['skill_id']
+            foreignKeyName: "fk_profile_skills_skill_id"
+            columns: ["skill_id"]
+            referencedRelation: "skills"
+            referencedColumns: ["skill_id"]
           },
           {
-            foreignKeyName: 'profile_skills_profile_id_fkey'
-            columns: ['profile_id']
-            referencedRelation: 'profile'
-            referencedColumns: ['profile_id']
+            foreignKeyName: "profile_skills_profile_id_fkey"
+            columns: ["profile_id"]
+            referencedRelation: "profile"
+            referencedColumns: ["profile_id"]
           },
           {
-            foreignKeyName: 'profile_skills_skill_id_fkey'
-            columns: ['skill_id']
-            referencedRelation: 'skills'
-            referencedColumns: ['skill_id']
+            foreignKeyName: "profile_skills_skill_id_fkey"
+            columns: ["skill_id"]
+            referencedRelation: "skills"
+            referencedColumns: ["skill_id"]
           },
         ]
       }
@@ -1096,10 +1100,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'project_contributor_project_id_fkey'
-            columns: ['project_id']
-            referencedRelation: 'projects'
-            referencedColumns: ['project_id']
+            foreignKeyName: "project_contributor_project_id_fkey"
+            columns: ["project_id"]
+            referencedRelation: "projects"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -1118,10 +1122,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'project_likes_project_id_fkey'
-            columns: ['project_id']
-            referencedRelation: 'projects'
-            referencedColumns: ['project_id']
+            foreignKeyName: "project_likes_project_id_fkey"
+            columns: ["project_id"]
+            referencedRelation: "projects"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -1143,10 +1147,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'project_markdown_project_id_fkey'
-            columns: ['project_id']
-            referencedRelation: 'projects'
-            referencedColumns: ['project_id']
+            foreignKeyName: "project_markdown_project_id_fkey"
+            columns: ["project_id"]
+            referencedRelation: "projects"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -1168,16 +1172,16 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'project_permissions_profile_id_fkey1'
-            columns: ['profile_id']
-            referencedRelation: 'profile'
-            referencedColumns: ['profile_id']
+            foreignKeyName: "project_permissions_profile_id_fkey1"
+            columns: ["profile_id"]
+            referencedRelation: "profile"
+            referencedColumns: ["profile_id"]
           },
           {
-            foreignKeyName: 'project_permissions_project_id_fkey'
-            columns: ['project_id']
-            referencedRelation: 'projects'
-            referencedColumns: ['project_id']
+            foreignKeyName: "project_permissions_project_id_fkey"
+            columns: ["project_id"]
+            referencedRelation: "projects"
+            referencedColumns: ["project_id"]
           },
         ]
       }
@@ -1208,10 +1212,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'projects_category_id_fkey'
-            columns: ['category_id']
-            referencedRelation: 'project_category'
-            referencedColumns: ['category_id']
+            foreignKeyName: "projects_category_id_fkey"
+            columns: ["category_id"]
+            referencedRelation: "project_category"
+            referencedColumns: ["category_id"]
           },
         ]
       }
@@ -1275,10 +1279,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'student_department_id_fkey'
-            columns: ['department_id']
-            referencedRelation: 'departments'
-            referencedColumns: ['department_id']
+            foreignKeyName: "student_department_id_fkey"
+            columns: ["department_id"]
+            referencedRelation: "departments"
+            referencedColumns: ["department_id"]
           },
         ]
       }
@@ -1300,16 +1304,16 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'student_after_courses_after_course_id_fkey'
-            columns: ['after_course_id']
-            referencedRelation: 'after_courses'
-            referencedColumns: ['after_course_id']
+            foreignKeyName: "student_after_courses_after_course_id_fkey"
+            columns: ["after_course_id"]
+            referencedRelation: "after_courses"
+            referencedColumns: ["after_course_id"]
           },
           {
-            foreignKeyName: 'student_after_courses_student_id_fkey'
-            columns: ['student_id']
-            referencedRelation: 'student'
-            referencedColumns: ['student_id']
+            foreignKeyName: "student_after_courses_student_id_fkey"
+            columns: ["student_id"]
+            referencedRelation: "student"
+            referencedColumns: ["student_id"]
           },
         ]
       }
@@ -1328,16 +1332,16 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'student_certificates_certificate_id_fkey1'
-            columns: ['certificate_id']
-            referencedRelation: 'certificates'
-            referencedColumns: ['certificate_id']
+            foreignKeyName: "student_certificates_certificate_id_fkey1"
+            columns: ["certificate_id"]
+            referencedRelation: "certificates"
+            referencedColumns: ["certificate_id"]
           },
           {
-            foreignKeyName: 'student_certificates_student_id_fkey'
-            columns: ['student_id']
-            referencedRelation: 'student'
-            referencedColumns: ['student_id']
+            foreignKeyName: "student_certificates_student_id_fkey"
+            columns: ["student_id"]
+            referencedRelation: "student"
+            referencedColumns: ["student_id"]
           },
         ]
       }
@@ -1359,16 +1363,16 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'student_competitions_competition_id_fkey1'
-            columns: ['competition_id']
-            referencedRelation: 'competitions'
-            referencedColumns: ['competition_id']
+            foreignKeyName: "student_competitions_competition_id_fkey1"
+            columns: ["competition_id"]
+            referencedRelation: "competitions"
+            referencedColumns: ["competition_id"]
           },
           {
-            foreignKeyName: 'student_competitions_student_id_fkey2'
-            columns: ['student_id']
-            referencedRelation: 'student'
-            referencedColumns: ['student_id']
+            foreignKeyName: "student_competitions_student_id_fkey2"
+            columns: ["student_id"]
+            referencedRelation: "student"
+            referencedColumns: ["student_id"]
           },
         ]
       }
@@ -1387,16 +1391,16 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'student_courses_course_id_fkey'
-            columns: ['course_id']
-            referencedRelation: 'courses'
-            referencedColumns: ['course_id']
+            foreignKeyName: "student_courses_course_id_fkey"
+            columns: ["course_id"]
+            referencedRelation: "courses"
+            referencedColumns: ["course_id"]
           },
           {
-            foreignKeyName: 'student_courses_student_id_fkey'
-            columns: ['student_id']
-            referencedRelation: 'student'
-            referencedColumns: ['student_id']
+            foreignKeyName: "student_courses_student_id_fkey"
+            columns: ["student_id"]
+            referencedRelation: "student"
+            referencedColumns: ["student_id"]
           },
         ]
       }
@@ -1415,53 +1419,53 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'student_jobs_job_id_fkey1'
-            columns: ['job_id']
-            referencedRelation: 'jobs'
-            referencedColumns: ['job_id']
+            foreignKeyName: "student_jobs_job_id_fkey1"
+            columns: ["job_id"]
+            referencedRelation: "jobs"
+            referencedColumns: ["job_id"]
           },
           {
-            foreignKeyName: 'student_jobs_student_id_fkey'
-            columns: ['student_id']
-            referencedRelation: 'student'
-            referencedColumns: ['student_id']
+            foreignKeyName: "student_jobs_student_id_fkey"
+            columns: ["student_id"]
+            referencedRelation: "student"
+            referencedColumns: ["student_id"]
           },
         ]
       }
       student_middle_schools: {
         Row: {
-          '1st_score': number | null
-          '2nd_score': number | null
+          "1st_score": number | null
+          "2nd_score": number | null
           middle_school_id: number
           middle_school_score: number | null
           student_id: string
         }
         Insert: {
-          '1st_score'?: number | null
-          '2nd_score'?: number | null
+          "1st_score"?: number | null
+          "2nd_score"?: number | null
           middle_school_id: number
           middle_school_score?: number | null
           student_id?: string
         }
         Update: {
-          '1st_score'?: number | null
-          '2nd_score'?: number | null
+          "1st_score"?: number | null
+          "2nd_score"?: number | null
           middle_school_id?: number
           middle_school_score?: number | null
           student_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: 'student_middle_schools_middle_school_id_fkey'
-            columns: ['middle_school_id']
-            referencedRelation: 'middle_schools'
-            referencedColumns: ['middle_school_id']
+            foreignKeyName: "student_middle_schools_middle_school_id_fkey"
+            columns: ["middle_school_id"]
+            referencedRelation: "middle_schools"
+            referencedColumns: ["middle_school_id"]
           },
           {
-            foreignKeyName: 'student_middle_schools_student_id_fkey'
-            columns: ['student_id']
-            referencedRelation: 'student'
-            referencedColumns: ['student_id']
+            foreignKeyName: "student_middle_schools_student_id_fkey"
+            columns: ["student_id"]
+            referencedRelation: "student"
+            referencedColumns: ["student_id"]
           },
         ]
       }
@@ -1483,16 +1487,16 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'student_universities_student_id_fkey'
-            columns: ['student_id']
-            referencedRelation: 'student'
-            referencedColumns: ['student_id']
+            foreignKeyName: "student_universities_student_id_fkey"
+            columns: ["student_id"]
+            referencedRelation: "student"
+            referencedColumns: ["student_id"]
           },
           {
-            foreignKeyName: 'student_universities_university_id_fkey1'
-            columns: ['university_id']
-            referencedRelation: 'universities'
-            referencedColumns: ['university_id']
+            foreignKeyName: "student_universities_university_id_fkey1"
+            columns: ["university_id"]
+            referencedRelation: "universities"
+            referencedColumns: ["university_id"]
           },
         ]
       }
@@ -1529,35 +1533,40 @@ export type Database = {
         }
         Relationships: []
       }
+      web_admin_readonly: {
+        Row: {
+          auth_id: string
+          created_at: string
+        }
+        Insert: {
+          auth_id: string
+          created_at?: string
+        }
+        Update: {
+          auth_id?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
       delete_claim: {
-        Args: {
-          uid: string
-          claim: string
-        }
+        Args: { uid: string; claim: string }
         Returns: string
       }
       get_claim: {
-        Args: {
-          uid: string
-          claim: string
-        }
+        Args: { uid: string; claim: string }
         Returns: Json
       }
       get_claims: {
-        Args: {
-          uid: string
-        }
+        Args: { uid: string }
         Returns: Json
       }
       get_my_claim: {
-        Args: {
-          claim: string
-        }
+        Args: { claim: string }
         Returns: Json
       }
       get_my_claims: {
@@ -1569,23 +1578,17 @@ export type Database = {
         Returns: boolean
       }
       set_claim: {
-        Args: {
-          uid: string
-          claim: string
-          value: Json
-        }
+        Args: { uid: string; claim: string; value: Json }
         Returns: string
       }
       stu_to_pro: {
-        Args: {
-          student_id_input: string
-        }
+        Args: { student_id_input: string }
         Returns: string
       }
     }
     Enums: {
-      collection_item_type: 'collection' | 'project'
-      visibility: 'public' | 'partially_public' | 'private'
+      collection_item_type: "collection" | "project"
+      visibility: "public" | "partially_public" | "private"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1659,6 +1662,7 @@ export type Database = {
           created_at: string | null
           id: string
           last_accessed_at: string | null
+          level: number | null
           metadata: Json | null
           name: string | null
           owner: string | null
@@ -1673,6 +1677,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           last_accessed_at?: string | null
+          level?: number | null
           metadata?: Json | null
           name?: string | null
           owner?: string | null
@@ -1687,6 +1692,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           last_accessed_at?: string | null
+          level?: number | null
           metadata?: Json | null
           name?: string | null
           owner?: string | null
@@ -1698,10 +1704,41 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 'objects_bucketId_fkey'
-            columns: ['bucket_id']
-            referencedRelation: 'buckets'
-            referencedColumns: ['id']
+            foreignKeyName: "objects_bucketId_fkey"
+            columns: ["bucket_id"]
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      prefixes: {
+        Row: {
+          bucket_id: string
+          created_at: string | null
+          level: number
+          name: string
+          updated_at: string | null
+        }
+        Insert: {
+          bucket_id: string
+          created_at?: string | null
+          level?: number
+          name: string
+          updated_at?: string | null
+        }
+        Update: {
+          bucket_id?: string
+          created_at?: string | null
+          level?: number
+          name?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prefixes_bucketId_fkey"
+            columns: ["bucket_id"]
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -1741,10 +1778,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 's3_multipart_uploads_bucket_id_fkey'
-            columns: ['bucket_id']
-            referencedRelation: 'buckets'
-            referencedColumns: ['id']
+            foreignKeyName: "s3_multipart_uploads_bucket_id_fkey"
+            columns: ["bucket_id"]
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -1787,16 +1824,16 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: 's3_multipart_uploads_parts_bucket_id_fkey'
-            columns: ['bucket_id']
-            referencedRelation: 'buckets'
-            referencedColumns: ['id']
+            foreignKeyName: "s3_multipart_uploads_parts_bucket_id_fkey"
+            columns: ["bucket_id"]
+            referencedRelation: "buckets"
+            referencedColumns: ["id"]
           },
           {
-            foreignKeyName: 's3_multipart_uploads_parts_upload_id_fkey'
-            columns: ['upload_id']
-            referencedRelation: 's3_multipart_uploads'
-            referencedColumns: ['id']
+            foreignKeyName: "s3_multipart_uploads_parts_upload_id_fkey"
+            columns: ["upload_id"]
+            referencedRelation: "s3_multipart_uploads"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -1805,31 +1842,40 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      can_insert_object: {
-        Args: {
-          bucketid: string
-          name: string
-          owner: string
-          metadata: Json
-        }
+      add_prefixes: {
+        Args: { _bucket_id: string; _name: string }
         Returns: undefined
       }
+      can_insert_object: {
+        Args: { bucketid: string; name: string; owner: string; metadata: Json }
+        Returns: undefined
+      }
+      delete_prefix: {
+        Args: { _bucket_id: string; _name: string }
+        Returns: boolean
+      }
       extension: {
-        Args: {
-          name: string
-        }
+        Args: { name: string }
         Returns: string
       }
       filename: {
-        Args: {
-          name: string
-        }
+        Args: { name: string }
         Returns: string
       }
       foldername: {
-        Args: {
-          name: string
-        }
+        Args: { name: string }
+        Returns: string[]
+      }
+      get_level: {
+        Args: { name: string }
+        Returns: number
+      }
+      get_prefix: {
+        Args: { name: string }
+        Returns: string
+      }
+      get_prefixes: {
+        Args: { name: string }
         Returns: string[]
       }
       get_size_by_bucket: {
@@ -1894,6 +1940,63 @@ export type Database = {
           metadata: Json
         }[]
       }
+      search_legacy_v1: {
+        Args: {
+          prefix: string
+          bucketname: string
+          limits?: number
+          levels?: number
+          offsets?: number
+          search?: string
+          sortcolumn?: string
+          sortorder?: string
+        }
+        Returns: {
+          name: string
+          id: string
+          updated_at: string
+          created_at: string
+          last_accessed_at: string
+          metadata: Json
+        }[]
+      }
+      search_v1_optimised: {
+        Args: {
+          prefix: string
+          bucketname: string
+          limits?: number
+          levels?: number
+          offsets?: number
+          search?: string
+          sortcolumn?: string
+          sortorder?: string
+        }
+        Returns: {
+          name: string
+          id: string
+          updated_at: string
+          created_at: string
+          last_accessed_at: string
+          metadata: Json
+        }[]
+      }
+      search_v2: {
+        Args: {
+          prefix: string
+          bucket_name: string
+          limits?: number
+          levels?: number
+          start_after?: string
+        }
+        Returns: {
+          key: string
+          name: string
+          id: string
+          updated_at: string
+          created_at: string
+          metadata: Json
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
@@ -1951,27 +2054,29 @@ export type Database = {
   }
 }
 
-type PublicSchema = Database[Extract<keyof Database, 'public'>]
+type DefaultSchema = Database[Extract<keyof Database, "public">]
 
 export type Tables<
-  PublicTableNameOrOptions extends
-    | keyof (PublicSchema['Tables'] & PublicSchema['Views'])
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-        Database[PublicTableNameOrOptions['schema']]['Views'])
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-      Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
+  ? (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] &
-        PublicSchema['Views'])
-    ? (PublicSchema['Tables'] &
-        PublicSchema['Views'])[PublicTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
         Row: infer R
       }
       ? R
@@ -1979,20 +2084,22 @@ export type Tables<
     : never
 
 export type TablesInsert<
-  PublicTableNameOrOptions extends
-    | keyof PublicSchema['Tables']
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
     | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
+  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
         Insert: infer I
       }
       ? I
@@ -2000,20 +2107,22 @@ export type TablesInsert<
     : never
 
 export type TablesUpdate<
-  PublicTableNameOrOptions extends
-    | keyof PublicSchema['Tables']
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
     | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
+  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
         Update: infer U
       }
       ? U
@@ -2021,29 +2130,75 @@ export type TablesUpdate<
     : never
 
 export type Enums<
-  PublicEnumNameOrOptions extends
-    | keyof PublicSchema['Enums']
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
     | { schema: keyof Database },
-  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
-> = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
-  : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
-    ? PublicSchema['Enums'][PublicEnumNameOrOptions]
+> = DefaultSchemaEnumNameOrOptions extends { schema: keyof Database }
+  ? Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
     : never
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | keyof PublicSchema['CompositeTypes']
+    | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof Database },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
     schema: keyof Database
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
 > = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema['CompositeTypes']
-    ? PublicSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
+
+export const Constants = {
+  chat: {
+    Enums: {},
+  },
+  collection: {
+    Enums: {
+      visibility: ["public", "partially public", "private"],
+    },
+  },
+  community: {
+    Enums: {},
+  },
+  enum: {
+    Enums: {},
+  },
+  graphql_public: {
+    Enums: {},
+  },
+  pgbouncer: {
+    Enums: {},
+  },
+  profile: {
+    Enums: {},
+  },
+  project: {
+    Enums: {},
+  },
+  public: {
+    Enums: {
+      collection_item_type: ["collection", "project"],
+      visibility: ["public", "partially_public", "private"],
+    },
+  },
+  storage: {
+    Enums: {},
+  },
+  student: {
+    Enums: {},
+  },
+  view: {
+    Enums: {},
+  },
+} as const
