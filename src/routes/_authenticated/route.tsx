@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { AuthSessionMissingError, User } from '@supabase/supabase-js'
+import { IconAlertTriangle } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
 import supabase from '@/utils/supabase/client'
 import { SearchProvider } from '@/context/search-context'
@@ -12,29 +13,45 @@ import SkipToMain from '@/components/skip-to-main'
 export const Route = createFileRoute('/_authenticated')({
   component: RouteComponent,
   loader: async () => {
-    const { data, error } = await supabase.auth.getUser()
-    if (error instanceof AuthSessionMissingError) {
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser()
+    if (error instanceof AuthSessionMissingError || !user) {
       return redirect({
         to: '/sign-in',
       })
     } else if (error) throw error
-    else if (!(await checkAdmin(data.user.id))) {
+
+    const adminStatus = await getAdminStatus(user.id)
+
+    if (!adminStatus.canAccess) {
       return redirect({
         to: '/403',
       })
     }
-    return data
+    return { user, isReadonly: adminStatus.isReadonly }
   },
 })
 
+function ReadOnlyBanner() {
+  return (
+    <div className="flex items-center justify-center gap-2 bg-warning p-2 text-center text-sm text-warning-foreground">
+      <IconAlertTriangle size={16} />
+      <span>이 계정은 읽기 전용입니다.</span>
+    </div>
+  )
+}
+
 function RouteComponent() {
-  const data: { user: User } = Route.useLoaderData()
+  const { user, isReadonly } = Route.useLoaderData()
   const defaultOpen = Cookies.get('sidebar:state') !== 'false'
 
   return (
-    <UserProvider user={data?.user || null}>
+    <UserProvider user={user || null}>
       <SearchProvider>
         <SidebarProvider defaultOpen={defaultOpen}>
+          {isReadonly && <ReadOnlyBanner />}
           <SkipToMain />
           <AppSidebar />
           <div
@@ -56,7 +73,7 @@ function RouteComponent() {
     </UserProvider>
   )
 }
-async function checkAdmin(id: string) {
+async function getAdminStatus(id: string) {
   const [permission, readonly] = await Promise.all([
     supabase.from('web_admin_permission').select('auth_id').eq('auth_id', id),
     supabase.from('web_admin_readonly').select('auth_id').eq('auth_id', id),
@@ -71,8 +88,11 @@ async function checkAdmin(id: string) {
     throw readonly.error
   }
 
-  return (
-    (permission.data && permission.data.length > 0) ||
-    (readonly.data && readonly.data.length > 0)
-  )
+  const hasPermission = permission.data && permission.data.length > 0
+  const hasReadonly = readonly.data && readonly.data.length > 0
+
+  return {
+    canAccess: hasPermission || hasReadonly,
+    isReadonly: !hasPermission && hasReadonly,
+  }
 }
