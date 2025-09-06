@@ -1,11 +1,14 @@
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
+// import { Input } from "@/components/ui/input";
+import { useEditUser } from '../context/edit-context'
+import { UserDetailType } from '../data/schema'
 
-import { useEditUser } from "../context/edit-context"
-import { UserDetailType } from "../data/schema";
-
-export const MilitaryService = ({ datas }: {datas: UserDetailType['military_services']}) => {
+export const MilitaryService = ({
+  datas,
+}: {
+  datas: UserDetailType['military_services']
+}) => {
   const { editingSection } = useEditUser()
 
   const militaryStatus = () => {
@@ -14,11 +17,12 @@ export const MilitaryService = ({ datas }: {datas: UserDetailType['military_serv
       const militaryStartDate = new Date(datas.start_date)
       const militaryEndDate = new Date(datas.end_date)
 
-      if (militaryStartDate <= nowDate && nowDate <= militaryEndDate) return "복무 중"
-      else if (nowDate <= militaryStartDate) return "미완료"
-      else if (nowDate >= militaryEndDate) return "완료"
+      if (militaryStartDate <= nowDate && nowDate <= militaryEndDate)
+        return '복무 중'
+      else if (nowDate <= militaryStartDate) return '미완료'
+      else if (nowDate >= militaryEndDate) return '완료'
     } else {
-      return "미완료"
+      return '미완료'
     }
   }
 
@@ -26,23 +30,23 @@ export const MilitaryService = ({ datas }: {datas: UserDetailType['military_serv
 
   return (
     <div>
-    {editingSection === 'military' ? (
-      <div className="space-y-4">
-        <div className="flex items-center gap-4">
-          <Label
-            htmlFor="militaryCompleted"
-            className="flex items-center gap-2"
-          >
-            <Checkbox
-              id="militaryCompleted"
-              // checked={editData.militaryService?.completed}
-              onCheckedChange={() => {}}
-            />
-            병역여부
-          </Label>
-        </div>
+      {editingSection === 'military' ? (
+        <div className='space-y-4'>
+          <div className='flex items-center gap-4'>
+            <Label
+              htmlFor='militaryCompleted'
+              className='flex items-center gap-2'
+            >
+              <Checkbox
+                id='militaryCompleted'
+                // checked={editData.militaryService?.completed}
+                onCheckedChange={() => {}}
+              />
+              병역여부
+            </Label>
+          </div>
 
-        {/* {editData.militaryService?.completed && (
+          {/* {editData.militaryService?.completed && (
           <div className="space-y-2">
             <Label>복무기간</Label>
             <Input
@@ -57,39 +61,33 @@ export const MilitaryService = ({ datas }: {datas: UserDetailType['military_serv
             />
           </div>
         )} */}
-      </div>
-    ) : (
-      datas ? (
-        <dl className="space-y-2">
-          <div className="flex gap-2">
-            <dt className="font-medium w-24 flex-shrink-0">병역여부:</dt>
-            <dd>
-              {studentMilitaryStatus}
-            </dd>
+        </div>
+      ) : datas ? (
+        <dl className='space-y-2'>
+          <div className='flex gap-2'>
+            <dt className='w-24 flex-shrink-0 font-medium'>병역여부:</dt>
+            <dd>{studentMilitaryStatus}</dd>
           </div>
           {datas.start_date && (
             <>
-              <div className="flex gap-2">
-                <dt className="font-medium w-24 flex-shrink-0">
-                  복무 기간:
-                </dt>
+              <div className='flex gap-2'>
+                <dt className='w-24 flex-shrink-0 font-medium'>복무 기간:</dt>
                 <dd>{datas.start_date}</dd> ~ <dd>{datas.end_date ?? '-'}</dd>
               </div>
-              <div className="flex gap-2">
-                <dt className="font-medium w-24 flex-shrink-0">
-                  복무 형태:
-                </dt>
-                <dd>{datas.military_service_statuses.military_service_status_name}</dd>
+              <div className='flex gap-2'>
+                <dt className='w-24 flex-shrink-0 font-medium'>복무 형태:</dt>
+                <dd>
+                  {datas.military_service_statuses.military_service_status_name}
+                </dd>
               </div>
             </>
           )}
         </dl>
       ) : (
         <>
-          <dt className="font-medium w-26 flex-shrink-0">병역여부: 미완료</dt>
+          <dt className='w-26 flex-shrink-0 font-medium'>병역여부: 미완료</dt>
         </>
-      )
-    )}
-  </div>
+      )}
+    </div>
   )
 }

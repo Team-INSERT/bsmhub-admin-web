@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { IconAlertTriangle } from '@tabler/icons-react'
-import { AuthSessionMissingError, User } from '@supabase/supabase-js'
+import { AuthSessionMissingError } from '@supabase/supabase-js'
 import { cn } from '@/lib/utils'
 import supabase from '@/utils/supabase/client'
 import { SearchProvider } from '@/context/search-context'
