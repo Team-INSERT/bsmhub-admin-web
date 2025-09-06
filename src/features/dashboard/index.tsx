@@ -62,9 +62,8 @@ export default function Dashboard() {
 
       {/* ===== Main ===== */}
       <Main fixed>
-        <div className='relative h-full w-full'>
+        <div className='relative h-full w-full' ref={objectRef}>
           <object
-            ref={objectRef}
             key={theme}
             type='text/html'
             data-testid='grafana-iframe'
