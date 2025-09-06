@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { handleUserMutation } from './handleUserMutation'
-import { MutationOperation } from '../data/schema'
+import { handleUserMutation } from '@/features/users/services/handleUserMutation'
+import { MutationOperation } from '@/features/users/data/schema'
 import supabase from '@/utils/supabase/client'
 
 vi.mock('@/utils/supabase/client', () => ({
