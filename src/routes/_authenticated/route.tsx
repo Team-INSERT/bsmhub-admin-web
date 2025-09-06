@@ -35,7 +35,7 @@ export const Route = createFileRoute('/_authenticated')({
 })
 
 function ReadOnlyBanner() {
-  const bannerText = '이 계정은 읽기 전용입니다.'
+  const bannerText = '이 계정은 읽기 전용입니다. 수정 권한을 위해선 insert25.team@gmail.com 로 연락주세요.'
   const BannerContent = () => (
     <>
       <span className="mx-4">{bannerText}</span>
@@ -101,11 +101,9 @@ async function getAdminStatus(id: string) {
   ])
 
   if (permission.error) {
-    console.error('Error checking admin permissions:', permission.error)
     throw permission.error
   }
   if (readonly.error) {
-    console.error('Error checking admin readonly permissions:', readonly.error)
     throw readonly.error
   }
 
