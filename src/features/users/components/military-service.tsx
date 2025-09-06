@@ -10,12 +10,13 @@ export const MilitaryService = ({
   datas: UserDetailType['military_services']
 }) => {
   const { editingSection } = useEditUser()
+  const militaryServiceData = datas && datas.length > 0 ? datas[0] : null
 
   const militaryStatus = () => {
-    if (datas) {
+    if (militaryServiceData) {
       const nowDate = new Date()
-      const militaryStartDate = new Date(datas.start_date)
-      const militaryEndDate = new Date(datas.end_date)
+      const militaryStartDate = new Date(militaryServiceData.start_date)
+      const militaryEndDate = new Date(militaryServiceData.end_date)
 
       if (militaryStartDate <= nowDate && nowDate <= militaryEndDate)
         return '복무 중'
@@ -62,22 +63,26 @@ export const MilitaryService = ({
           </div>
         )} */}
         </div>
-      ) : datas ? (
+      ) : militaryServiceData ? (
         <dl className='space-y-2'>
           <div className='flex gap-2'>
             <dt className='w-24 flex-shrink-0 font-medium'>병역여부:</dt>
             <dd>{studentMilitaryStatus}</dd>
           </div>
-          {datas.start_date && (
+          {militaryServiceData.start_date && (
             <>
               <div className='flex gap-2'>
                 <dt className='w-24 flex-shrink-0 font-medium'>복무 기간:</dt>
-                <dd>{datas.start_date}</dd> ~ <dd>{datas.end_date ?? '-'}</dd>
+                <dd>{militaryServiceData.start_date}</dd> ~{' '}
+                <dd>{militaryServiceData.end_date ?? '-'}</dd>
               </div>
               <div className='flex gap-2'>
                 <dt className='w-24 flex-shrink-0 font-medium'>복무 형태:</dt>
                 <dd>
-                  {datas.military_service_statuses.military_service_status_name}
+                  {
+                    militaryServiceData.military_service_statuses
+                      .military_service_status_name
+                  }
                 </dd>
               </div>
             </>
