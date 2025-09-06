@@ -23,6 +23,13 @@ type addFieldTrainingType = Pick<
   'company_id' | 'start_date' | 'end_date' | 'job_id'
 >
 
+const formatDateToYYYYMMDD = (date: Date) => {
+  const year = date.getFullYear()
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const day = date.getDate().toString().padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
 export const Employment = ({
   datas,
 }: {
@@ -81,8 +88,8 @@ export const Employment = ({
               student_id: currentRow.student_id,
               company_id: currentFieldTraining.company_id,
               job_id: updateJob,
-              start_date: updateDate.from.toISOString().split('T')[0],
-              end_date: updateDate.to.toISOString().split('T')[0],
+              start_date: formatDateToYYYYMMDD(updateDate.from),
+              end_date: formatDateToYYYYMMDD(updateDate.to),
               deleted_at: isDeleted ? new Date().toISOString() : null,
             },
           },
@@ -192,9 +199,12 @@ export const Employment = ({
                       setAddDate(range)
                       setAddFieldTraining((prev) => ({
                         ...prev,
-                        start_date:
-                          range?.from?.toISOString().split('T')[0] ?? '',
-                        end_date: range?.to?.toISOString().split('T')[0] ?? '',
+                        start_date: range?.from
+                          ? formatDateToYYYYMMDD(range.from)
+                          : '',
+                        end_date: range?.to
+                          ? formatDateToYYYYMMDD(range.to)
+                          : '',
                       }))
                     }}
                     className='rounded-lg border border-border p-2'
@@ -268,7 +278,6 @@ export const Employment = ({
                             employment_companies: {
                               ...addFieldTraining,
                               student_id: currentRow.student_id,
-                              created_at: String(new Date()),
                             },
                           },
                         },

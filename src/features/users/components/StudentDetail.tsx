@@ -8,9 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import Loader from '@/components/loader'
 import { DetailType, useEditUser } from '../context/edit-context'
-import { UserDetailType } from '../data/schema'
-import { useHandleEmploymentMutation } from '../services/employment-companies/handleEmployment'
-import { useHandleFieldTrainingMutation } from '../services/field-training/handleFieldTraining'
+import { MutationOperation, UserDetailType } from '../data/schema'
+import { useHandleUserMutation } from '../services/handleUserMutation'
 import { useUserDetailQuery } from '../services/selectUser'
 import { useUserListQuery } from '../services/seleteUserList'
 import { AfterCourses } from './after-courses'
@@ -88,29 +87,35 @@ export function StudentDetail({ student_id }: { student_id: string }) {
   const { data, isLoading, refetch, isFetching } =
     useUserDetailQuery(student_id)
   const { refetch: userRefetch } = useUserListQuery()
-  const { mutateAsync: handleFieldTrainingMutation } =
-    useHandleFieldTrainingMutation()
-  const { mutateAsync: handleEmploymentMutation } =
-    useHandleEmploymentMutation()
+  const { mutateAsync: handleUserMutation } = useHandleUserMutation()
 
   const saveEditing = async () => {
     if (!editData) return
 
-    // 현장실습 데이터 처리
-    const fieldTrainingData = editData.filter(
-      (item) => 'field_training' in item.datas
-    )
-    if (fieldTrainingData.length > 0) {
-      await handleFieldTrainingMutation(fieldTrainingData)
-    }
+    const operations: MutationOperation[] = editData.map(item => {
+      const tableName = Object.keys(item.datas)[0]
+      const data = Object.values(item.datas)[0]
 
-    // 취업 데이터 처리
-    const employmentData = editData.filter(
-      (item) => 'employment_companies' in item.datas
-    )
-    if (employmentData.length > 0) {
-      await handleEmploymentMutation(employmentData)
-    }
+      const op: MutationOperation = {
+        tableName,
+        action: item.action,
+        data,
+      }
+
+      if (item.action === 'update' || item.action === 'delete') {
+        op.matchColumns = {
+          student_id: data.student_id,
+          company_id: data.company_id,
+        }
+        if (data.job_id) {
+          op.matchColumns.job_id = data.job_id
+        }
+      }
+
+      return op
+    })
+
+    await handleUserMutation(operations)
 
     await refetch()
     setEditingSection(null)

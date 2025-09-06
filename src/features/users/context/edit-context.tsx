@@ -1,5 +1,10 @@
 import React, { useState } from 'react'
-import { UserEditType } from '../data/schema'
+import { MutationAction } from '../data/schema'
+
+export type UserEditType = {
+  action: MutationAction
+  datas: Record<string, any>
+}[]
 
 export type DetailType =
   | 'after_courses'
