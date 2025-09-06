@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
-import { IconAlertTriangle } from '@tabler/icons-react'
 import { AuthSessionMissingError, User } from '@supabase/supabase-js'
+import { IconAlertTriangle } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
 import supabase from '@/utils/supabase/client'
 import { SearchProvider } from '@/context/search-context'
@@ -35,13 +35,31 @@ export const Route = createFileRoute('/_authenticated')({
 })
 
 function ReadOnlyBanner() {
+  const bannerText = '이 계정은 읽기 전용입니다.'
+  const BannerContent = () => (
+    <>
+      <span className="mx-4">{bannerText}</span>
+      <span className="mx-4">{bannerText}</span>
+      <span className="mx-4">{bannerText}</span>
+      <span className="mx-4">{bannerText}</span>
+      <span className="mx-4">{bannerText}</span>
+    </>
+  )
+
   return (
-    <div className='flex items-center justify-center gap-2 bg-warning p-2 text-center text-sm text-warning-foreground'>
-      <IconAlertTriangle size={16} />
-      <span>
-        이 계정은 읽기 전용입니다. 수정 권한을 위해선 insert25.team@gmail.com 로
-        연락주세요.
-      </span>
+    <div className="flex items-center gap-2 overflow-hidden bg-warning p-2 text-sm text-warning-foreground">
+      <IconAlertTriangle className="flex-shrink-0" size={16} />
+      <div className="flex min-w-0 flex-1">
+        <div className="flex w-full flex-shrink-0 animate-marquee items-center whitespace-nowrap">
+          <BannerContent />
+        </div>
+        <div
+          className="flex w-full flex-shrink-0 animate-marquee items-center whitespace-nowrap"
+          aria-hidden="true"
+        >
+          <BannerContent />
+        </div>
+      </div>
     </div>
   )
 }
@@ -51,31 +69,29 @@ function RouteComponent() {
   const defaultOpen = Cookies.get('sidebar:state') !== 'false'
 
   return (
-    <>
-      {isReadonly && <ReadOnlyBanner />}
-      <UserProvider user={user || null}>
-        <SearchProvider>
-          <SidebarProvider defaultOpen={defaultOpen}>
-            <SkipToMain />
-            <AppSidebar />
-            <div
-              id='content'
-              className={cn(
-                'ml-auto w-full max-w-full',
-                'peer-data-[state=collapsed]:w-[calc(100%-var(--sidebar-width-icon)-1rem)]',
-                'peer-data-[state=expanded]:w-[calc(100%-var(--sidebar-width))]',
-                'transition-[width] duration-200 ease-linear',
-                'flex h-svh flex-col',
-                'group-data-[scroll-locked=1]/body:h-full',
-                'group-data-[scroll-locked=1]/body:has-[main.fixed-main]:h-svh'
-              )}
-            >
-              <Outlet />
-            </div>
-          </SidebarProvider>
-        </SearchProvider>
-      </UserProvider>
-    </>
+    <UserProvider user={user || null}>
+      <SearchProvider>
+        <SidebarProvider defaultOpen={defaultOpen}>
+          {isReadonly && <ReadOnlyBanner />}
+          <SkipToMain />
+          <AppSidebar />
+          <div
+            id='content'
+            className={cn(
+              'ml-auto w-full max-w-full',
+              'peer-data-[state=collapsed]:w-[calc(100%-var(--sidebar-width-icon)-1rem)]',
+              'peer-data-[state=expanded]:w-[calc(100%-var(--sidebar-width))]',
+              'transition-[width] duration-200 ease-linear',
+              'flex h-svh flex-col',
+              'group-data-[scroll-locked=1]/body:h-full',
+              'group-data-[scroll-locked=1]/body:has-[main.fixed-main]:h-svh'
+            )}
+          >
+            <Outlet />
+          </div>
+        </SidebarProvider>
+      </SearchProvider>
+    </UserProvider>
   )
 }
 async function getAdminStatus(id: string) {
@@ -85,9 +101,11 @@ async function getAdminStatus(id: string) {
   ])
 
   if (permission.error) {
+    console.error('Error checking admin permissions:', permission.error)
     throw permission.error
   }
   if (readonly.error) {
+    console.error('Error checking admin readonly permissions:', readonly.error)
     throw readonly.error
   }
 
