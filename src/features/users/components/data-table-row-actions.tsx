@@ -35,7 +35,8 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
           <DropdownMenuItem
             onClick={() => {
               const isEditingThisRow =
-                open === 'edit' && currentRow?.id === row.original.id
+                open === 'edit' &&
+                currentRow?.student_id === row.original.student_id
 
               if (isEditingThisRow) {
                 // Same user, so toggle off.
