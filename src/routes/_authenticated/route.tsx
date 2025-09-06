@@ -57,13 +57,22 @@ function RouteComponent() {
   )
 }
 async function checkAdmin(id: string) {
-  const { data, error } = await supabase
-    .from('web_admin_permission')
-    .select('auth_id')
-    .eq('auth_id', id)
-  if (error) {
-    console.error('Error checking admin permissions:', error)
-    throw error
+  const [permission, readonly] = await Promise.all([
+    supabase.from('web_admin_permission').select('auth_id').eq('auth_id', id),
+    supabase.from('web_admin_readonly').select('auth_id').eq('auth_id', id),
+  ])
+
+  if (permission.error) {
+    console.error('Error checking admin permissions:', permission.error)
+    throw permission.error
   }
-  return data && data.length > 0
+  if (readonly.error) {
+    console.error('Error checking admin readonly permissions:', readonly.error)
+    throw readonly.error
+  }
+
+  return (
+    (permission.data && permission.data.length > 0) ||
+    (readonly.data && readonly.data.length > 0)
+  )
 }
