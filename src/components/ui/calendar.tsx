@@ -102,15 +102,12 @@ function Calendar({
           "group/day relative aspect-square h-full w-full select-none p-0 text-c…enter [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data…-selected=true]_button]:rounded-r-md",
           defaultClassNames.day
         ),
-        range_start: cn(
-          "bg-accent rounded-l-md",
-          defaultClassNames.range_start
-        ),
+        range_start: cn("rounded-l-md", defaultClassNames.range_start),
         range_middle: cn(
           "rounded-none bg-accent",
           defaultClassNames.range_middle
         ),
-        range_end: cn("bg-accent rounded-r-md", defaultClassNames.range_end),
+        range_end: cn("rounded-r-md", defaultClassNames.range_end),
         today: cn(
           "bg-accent text-accent-foreground rounded-md data-[selected=true]:roun…ded-none",
           defaultClassNames.today
@@ -203,7 +200,11 @@ function CalendarDayButton({
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       className={cn(
+        "hover:bg-accent/80 rounded-md",
         "data-[selected-single=true]:bg-primary data-[selected-single=true]:!text-primary-foreground",
+        "data-[range-start=true]:bg-primary data-[range-start=true]:!text-primary-foreground",
+        "data-[range-end=true]:bg-primary data-[range-end=true]:!text-primary-foreground",
+        "data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground",
         defaultClassNames.day,
         className
       )}
