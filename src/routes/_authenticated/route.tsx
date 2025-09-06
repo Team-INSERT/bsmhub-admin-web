@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { AuthSessionMissingError, User } from '@supabase/supabase-js'
+import { IconAlertTriangle } from '@tabler/icons-react'
 import { cn } from '@/lib/utils'
 import supabase from '@/utils/supabase/client'
 import { SearchProvider } from '@/context/search-context'
@@ -12,29 +13,66 @@ import SkipToMain from '@/components/skip-to-main'
 export const Route = createFileRoute('/_authenticated')({
   component: RouteComponent,
   loader: async () => {
-    const { data, error } = await supabase.auth.getUser()
-    if (error instanceof AuthSessionMissingError) {
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser()
+    if (error instanceof AuthSessionMissingError || !user) {
       return redirect({
         to: '/sign-in',
       })
     } else if (error) throw error
-    else if (!(await checkAdmin(data.user.id))) {
+
+    const adminStatus = await getAdminStatus(user.id)
+
+    if (!adminStatus.canAccess) {
       return redirect({
         to: '/403',
       })
     }
-    return data
+    return { user, isReadonly: adminStatus.isReadonly }
   },
 })
 
+function ReadOnlyBanner() {
+  const bannerText = '이 계정은 읽기 전용입니다. 수정 권한을 위해선 insert25.team@gmail.com 로 연락주세요.'
+  const BannerContent = () => (
+    <>
+      <span className="mx-4">{bannerText}</span>
+      <span className="mx-4">{bannerText}</span>
+      <span className="mx-4">{bannerText}</span>
+      <span className="mx-4">{bannerText}</span>
+      <span className="mx-4">{bannerText}</span>
+    </>
+  )
+
+  return (
+    <div className="flex items-center gap-2 overflow-hidden bg-warning p-2 text-sm text-warning-foreground">
+      <IconAlertTriangle className="flex-shrink-0" size={16} />
+      <div className="flex min-w-0 flex-1">
+        <div className="flex w-full flex-shrink-0 animate-marquee items-center whitespace-nowrap">
+          <BannerContent />
+        </div>
+        <div
+          className="flex w-full flex-shrink-0 animate-marquee items-center whitespace-nowrap"
+          aria-hidden="true"
+        >
+          <BannerContent />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function RouteComponent() {
-  const data: { user: User } = Route.useLoaderData()
+  const { user, isReadonly } = Route.useLoaderData()
   const defaultOpen = Cookies.get('sidebar:state') !== 'false'
 
   return (
-    <UserProvider user={data?.user || null}>
+    <UserProvider user={user || null}>
       <SearchProvider>
         <SidebarProvider defaultOpen={defaultOpen}>
+          {isReadonly && <ReadOnlyBanner />}
           <SkipToMain />
           <AppSidebar />
           <div
@@ -56,14 +94,24 @@ function RouteComponent() {
     </UserProvider>
   )
 }
-async function checkAdmin(id: string) {
-  const { data, error } = await supabase
-    .from('web_admin_permission')
-    .select('auth_id')
-    .eq('auth_id', id)
-  if (error) {
-    console.error('Error checking admin permissions:', error)
-    throw error
+async function getAdminStatus(id: string) {
+  const [permission, readonly] = await Promise.all([
+    supabase.from('web_admin_permission').select('auth_id').eq('auth_id', id),
+    supabase.from('web_admin_readonly').select('auth_id').eq('auth_id', id),
+  ])
+
+  if (permission.error) {
+    throw permission.error
   }
-  return data && data.length > 0
+  if (readonly.error) {
+    throw readonly.error
+  }
+
+  const hasPermission = permission.data && permission.data.length > 0
+  const hasReadonly = readonly.data && readonly.data.length > 0
+
+  return {
+    canAccess: hasPermission || hasReadonly,
+    isReadonly: !hasPermission && hasReadonly,
+  }
 }

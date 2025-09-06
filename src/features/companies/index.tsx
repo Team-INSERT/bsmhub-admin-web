@@ -17,7 +17,7 @@ export default function Companies() {
 
   return (
     <UsersProvider>
-      <Header fixed>
+      <Header>
         <Search />
         <div className='flex items-center ml-auto space-x-4'>
           <ThemeSwitch />
