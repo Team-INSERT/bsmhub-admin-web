@@ -9,8 +9,8 @@ import { Separator } from '@/components/ui/separator'
 import Loader from '@/components/loader'
 import { DetailType, useEditUser } from '../context/edit-context'
 import { UserDetailType } from '../data/schema'
-import { handleEmployment } from '../services/employment-companies/handleEmployment'
-import { handleFieldTraining } from '../services/field-training/handleFieldTraining'
+import { useHandleEmploymentMutation } from '../services/employment-companies/handleEmployment'
+import { useHandleFieldTrainingMutation } from '../services/field-training/handleFieldTraining'
 import { useUserDetailQuery } from '../services/selectUser'
 import { useUserListQuery } from '../services/seleteUserList'
 import { AfterCourses } from './after-courses'
@@ -58,7 +58,13 @@ const componentsMap: Record<DetailType, ValueItemsType> = {
   },
   employment: {
     label: '취업',
-    component: (data) => <Employment datas={data.employment_companies.filter((item: UserDetailType['employment_companies'][0]) => !item.deleted_at)} />,
+    component: (data) => (
+      <Employment
+        datas={data.employment_companies.filter(
+          (item: UserDetailType['employment_companies'][0]) => !item.deleted_at
+        )}
+      />
+    ),
   },
   university: {
     label: '대학교 진학',
@@ -82,6 +88,10 @@ export function StudentDetail({ student_id }: { student_id: string }) {
   const { data, isLoading, refetch, isFetching } =
     useUserDetailQuery(student_id)
   const { refetch: userRefetch } = useUserListQuery()
+  const { mutateAsync: handleFieldTrainingMutation } =
+    useHandleFieldTrainingMutation()
+  const { mutateAsync: handleEmploymentMutation } =
+    useHandleEmploymentMutation()
 
   const saveEditing = async () => {
     if (!editData) return
@@ -91,7 +101,7 @@ export function StudentDetail({ student_id }: { student_id: string }) {
       (item) => 'field_training' in item.datas
     )
     if (fieldTrainingData.length > 0) {
-      await handleFieldTraining(fieldTrainingData)
+      await handleFieldTrainingMutation(fieldTrainingData)
     }
 
     // 취업 데이터 처리
@@ -99,7 +109,7 @@ export function StudentDetail({ student_id }: { student_id: string }) {
       (item) => 'employment_companies' in item.datas
     )
     if (employmentData.length > 0) {
-      await handleEmployment(employmentData)
+      await handleEmploymentMutation(employmentData)
     }
 
     await refetch()
