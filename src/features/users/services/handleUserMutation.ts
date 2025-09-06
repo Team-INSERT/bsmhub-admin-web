@@ -3,7 +3,7 @@ import supabase from '@/utils/supabase/client'
 import { useToast } from '@/hooks/use-toast'
 import { MutationOperation } from '../data/schema'
 
-const handleUserMutation = async (operations: MutationOperation[]) => {
+export const handleUserMutation = async (operations: MutationOperation[]) => {
   for (const op of operations) {
     let query = supabase.from(op.tableName)
     let error
