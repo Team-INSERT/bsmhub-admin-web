@@ -52,6 +52,7 @@ function RouteComponent() {
 
   return (
     <>
+      {isReadonly && <ReadOnlyBanner />}
       <UserProvider user={user || null}>
         <SearchProvider>
           <SidebarProvider defaultOpen={defaultOpen}>
@@ -69,7 +70,6 @@ function RouteComponent() {
                 'group-data-[scroll-locked=1]/body:has-[main.fixed-main]:h-svh'
               )}
             >
-              {isReadonly && <ReadOnlyBanner />}
               <Outlet />
             </div>
           </SidebarProvider>
