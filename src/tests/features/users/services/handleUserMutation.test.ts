@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { handleUserMutation } from '@/features/users/services/handleUserMutation'
-import { MutationOperation } from '@/features/users/data/schema'
 import supabase from '@/utils/supabase/client'
+import { MutationOperation } from '@/features/users/data/schema'
+import { handleUserMutation } from '@/features/users/services/handleUserMutation'
 
 vi.mock('@/utils/supabase/client', () => ({
   default: {
@@ -16,7 +16,7 @@ describe('handleUserMutation', () => {
 
   it('should handle "add" action', async () => {
     const insertMock = vi.fn().mockResolvedValue({ error: null })
-    vi.mocked(supabase.from).mockReturnValue({ insert: insertMock } as any)
+    vi.mocked(supabase.from).mockReturnValue({ insert: insertMock })
 
     const operations: MutationOperation[] = [
       {
@@ -35,7 +35,7 @@ describe('handleUserMutation', () => {
   it('should handle "update" action', async () => {
     const updateMatchMock = vi.fn().mockResolvedValue({ error: null })
     const updateMock = vi.fn().mockReturnValue({ match: updateMatchMock })
-    vi.mocked(supabase.from).mockReturnValue({ update: updateMock } as any)
+    vi.mocked(supabase.from).mockReturnValue({ update: updateMock })
 
     const operations: MutationOperation[] = [
       {

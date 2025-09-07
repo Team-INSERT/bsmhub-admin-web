@@ -82,6 +82,6 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    include: ['tests/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
+    include: ['src/tests/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
   },
 })
