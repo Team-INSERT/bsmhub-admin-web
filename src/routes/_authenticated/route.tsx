@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { IconAlertTriangle } from '@tabler/icons-react'
-import { AuthSessionMissingError, User } from '@supabase/supabase-js'
+import { AuthSessionMissingError } from '@supabase/supabase-js'
 import { cn } from '@/lib/utils'
 import supabase from '@/utils/supabase/client'
 import { SearchProvider } from '@/context/search-context'
@@ -12,13 +12,13 @@ import SkipToMain from '@/components/skip-to-main'
 
 export const Route = createFileRoute('/_authenticated')({
   component: RouteComponent,
-  loader: async () => {
+  beforeLoad: async () => {
     const {
       data: { user },
       error,
     } = await supabase.auth.getUser()
     if (error instanceof AuthSessionMissingError || !user) {
-      return redirect({
+      throw redirect({
         to: '/sign-in',
       })
     } else if (error) throw error
@@ -26,7 +26,7 @@ export const Route = createFileRoute('/_authenticated')({
     const adminStatus = await getAdminStatus(user.id)
 
     if (!adminStatus.canAccess) {
-      return redirect({
+      throw redirect({
         to: '/403',
       })
     }
@@ -47,11 +47,11 @@ function ReadOnlyBanner() {
   return (
     <div className='flex items-center gap-2 overflow-hidden bg-warning p-2 text-sm text-warning-foreground'>
       <div className='flex min-w-0 flex-1'>
-        <div className='animate-marquee flex w-full flex-shrink-0 items-center whitespace-nowrap'>
+        <div className='flex w-full flex-shrink-0 animate-marquee items-center whitespace-nowrap'>
           <BannerContent />
         </div>
         <div
-          className='animate-marquee flex w-full flex-shrink-0 items-center whitespace-nowrap'
+          className='flex w-full flex-shrink-0 animate-marquee items-center whitespace-nowrap'
           aria-hidden='true'
         >
           <BannerContent />
@@ -62,7 +62,7 @@ function ReadOnlyBanner() {
 }
 
 function RouteComponent() {
-  const { user, isReadonly } = Route.useLoaderData()
+  const { user, isReadonly } = Route.useRouteContext()
   const defaultOpen = Cookies.get('sidebar:state') !== 'false'
 
   return (

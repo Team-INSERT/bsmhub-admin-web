@@ -57,7 +57,7 @@ export type UserDetailType = MergeDeep<
           'military_service_status_name'
         >
       }
-    >
+    >[]
     profile: {
       profile_skills: {
         skills: Tables<'skills'>
@@ -82,7 +82,7 @@ export type UserDetailType = MergeDeep<
       {
         middle_schools: Tables<'middle_schools'>
       }
-    >
+    >[]
     student_universities: {
       universities: Tables<'universities'>
     }[]
@@ -91,7 +91,7 @@ export type UserDetailType = MergeDeep<
 
 export type UserEditType = {
   action: 'add' | 'update' | 'delete'
-  datas: 
+  datas:
     | { field_training: BaseType['field_training']['Update'] }
     | { employment_companies: BaseType['employment_companies']['Update'] }
 }[]
