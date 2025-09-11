@@ -92,7 +92,14 @@ export const FieldTraining = ({
         },
       ])
     }
-  }, [updateDate, updateJob, editingSection, currentFieldTraining, currentRow, setEditData])
+  }, [
+    updateDate,
+    updateJob,
+    editingSection,
+    currentFieldTraining,
+    currentRow,
+    setEditData,
+  ])
 
   return (
     <div>
@@ -188,7 +195,8 @@ export const FieldTraining = ({
                                     company_id: currentFieldTraining.company_id,
                                     job_id: currentFieldTraining.job_id,
                                     start_date: currentFieldTraining.start_date,
-                                    end_date: currentFieldTraining.end_date ?? '',
+                                    end_date:
+                                      currentFieldTraining.end_date ?? '',
                                   },
                                 },
                               },

@@ -1,8 +1,7 @@
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-
-import { useEditUser } from "../context/edit-context"
-import { UserDetailType } from "../data/schema";
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { useEditUser } from '../context/edit-context'
+import { UserDetailType } from '../data/schema'
 
 export const MiddleSchool = ({
   datas,
@@ -69,15 +68,15 @@ export const MiddleSchool = ({
       ) : middleSchoolData ? (
         <dl className='space-y-2'>
           <div className='flex gap-2'>
-            <dt className='font-medium w-24 flex-shrink-0'>학교명:</dt>
+            <dt className='w-24 flex-shrink-0 font-medium'>학교명:</dt>
             <dd>{middleSchoolData.middle_schools.middle_school_name ?? '-'}</dd>
           </div>
           <div className='flex gap-2'>
-            <dt className='font-medium w-24 flex-shrink-0'>중학내신:</dt>
+            <dt className='w-24 flex-shrink-0 font-medium'>중학내신:</dt>
             <dd>{middleSchoolData.middle_school_score ?? '-'}</dd>
           </div>
           <div className='flex gap-2'>
-            <dt className='font-medium w-24 flex-shrink-0'>입학점수:</dt>
+            <dt className='w-24 flex-shrink-0 font-medium'>입학점수:</dt>
             <dd>
               1차: {middleSchoolData['1st_score'] || '-'}점, 2차:{' '}
               {middleSchoolData['2nd_score'] || '-'}점
@@ -85,7 +84,7 @@ export const MiddleSchool = ({
           </div>
         </dl>
       ) : (
-        <div className='flex justify-center mt-4'>
+        <div className='mt-4 flex justify-center'>
           학생의 중학교 정보가 존재하지 않습니다.
         </div>
       )}

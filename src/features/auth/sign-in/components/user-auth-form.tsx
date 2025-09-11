@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button'
 
 type UserAuthFormProps = HTMLAttributes<HTMLDivElement>
 
-
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, _setIsLoading] = useState(false)
 
@@ -31,29 +30,29 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 }
 
 async function handleGoogleSignIn() {
-    const baseUrl = import.meta.env.VITE_PUBLIC_SITE_URL
-    if (!baseUrl) {
-      alert('Base URL is not defined')
-      return
-    }
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${baseUrl}/callback`,
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'consent',
-        },
+  const baseUrl = import.meta.env.VITE_PUBLIC_SITE_URL
+  if (!baseUrl) {
+    alert('Base URL is not defined')
+    return
+  }
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${baseUrl}/callback`,
+      queryParams: {
+        access_type: 'offline',
+        prompt: 'consent',
       },
-    })
+    },
+  })
 
-    if (error) {
-      alert(error)
-      throw new Error(error.message)
-      return
-    }
-    if (data.url) {
-      console.log(data.url)
-    }
-    // window.open(data.url)
+  if (error) {
+    alert(error)
+    throw new Error(error.message)
+    return
+  }
+  if (data.url) {
+    console.log(data.url)
+  }
+  // window.open(data.url)
 }
