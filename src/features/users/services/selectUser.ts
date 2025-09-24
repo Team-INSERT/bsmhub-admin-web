@@ -75,7 +75,8 @@ export const useUserDetailQuery = (
       `
       )
       .eq('student_id', student_id)
-      .single()
+      .eq('profile.isTeam', false)
+      .limit(1)
 
     if (error) {
       console.error('Error : ', error)
@@ -93,11 +94,11 @@ export const useUserDetailQuery = (
       throw new Error('User data or profile data not found')
     }
 
-    const { profile } = profileDatas
+    const { profile } = profileDatas[0] || {}
 
     return {
       ...userDatas,
-      profile: profile || {},
+      profile: profile,
     } as UserDetailType
   }
 
