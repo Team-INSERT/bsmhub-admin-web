@@ -58,7 +58,7 @@ export type UserDetailType = MergeDeep<
         >
       }
     >[]
-    profile: {
+    profile?: {
       profile_skills: {
         skills: Tables<'skills'>
       }[]
