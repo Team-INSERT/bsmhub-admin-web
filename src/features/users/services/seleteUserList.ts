@@ -7,7 +7,8 @@ import { User } from '../data/schema'
 const seleteUserList = async () => {
   const { data, error } = await supabase.from('student')
     .select(`student_id, name, join_at, email, phone,
-      field_training(*)`)
+      field_training(*),
+      employment_companies(*)`)
 
   if (error) {
     throw new Error(error.message)
@@ -19,7 +20,10 @@ const seleteUserList = async () => {
     join_at: getCohort(student.join_at),
     email: student.email ?? '',
     phone: student.phone ?? '',
-    user_status: getFieldTrainingStatus(student.field_training),
+    user_status: getFieldTrainingStatus(
+      student.field_training,
+      student.employment_companies
+    ),
   }))
 
   return returnData
