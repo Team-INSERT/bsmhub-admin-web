@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import supabase from '@/utils/supabase/client'
 import { getCohort } from '@/utils/users/getCohort'
-import { getFieldTrainingStatus } from '@/utils/users/getFieldTrainingStatus'
+import { getFieldTrainingStatus } from '@/utils/users/getNowStatus'
 import { User } from '../data/schema'
 
 const seleteUserList = async () => {
